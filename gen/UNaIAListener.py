@@ -8,30 +8,111 @@ else:
 # This class defines a complete listener for a parse tree produced by UNaIAParser.
 class UNaIAListener(ParseTreeListener):
 
-    # Enter a parse tree produced by UNaIAParser#expr.
-    def enterExpr(self, ctx:UNaIAParser.ExprContext):
+    # Enter a parse tree produced by UNaIAParser#programa.
+    def enterPrograma(self, ctx:UNaIAParser.ProgramaContext):
         pass
 
-    # Exit a parse tree produced by UNaIAParser#expr.
-    def exitExpr(self, ctx:UNaIAParser.ExprContext):
-        pass
-
-
-    # Enter a parse tree produced by UNaIAParser#term.
-    def enterTerm(self, ctx:UNaIAParser.TermContext):
-        pass
-
-    # Exit a parse tree produced by UNaIAParser#term.
-    def exitTerm(self, ctx:UNaIAParser.TermContext):
+    # Exit a parse tree produced by UNaIAParser#programa.
+    def exitPrograma(self, ctx:UNaIAParser.ProgramaContext):
         pass
 
 
-    # Enter a parse tree produced by UNaIAParser#factor.
-    def enterFactor(self, ctx:UNaIAParser.FactorContext):
+    # Enter a parse tree produced by UNaIAParser#datos.
+    def enterDatos(self, ctx:UNaIAParser.DatosContext):
         pass
 
-    # Exit a parse tree produced by UNaIAParser#factor.
-    def exitFactor(self, ctx:UNaIAParser.FactorContext):
+    # Exit a parse tree produced by UNaIAParser#datos.
+    def exitDatos(self, ctx:UNaIAParser.DatosContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#AsigDatos.
+    def enterAsigDatos(self, ctx:UNaIAParser.AsigDatosContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#AsigDatos.
+    def exitAsigDatos(self, ctx:UNaIAParser.AsigDatosContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#AsigModelo.
+    def enterAsigModelo(self, ctx:UNaIAParser.AsigModeloContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#AsigModelo.
+    def exitAsigModelo(self, ctx:UNaIAParser.AsigModeloContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#AsigMetodo.
+    def enterAsigMetodo(self, ctx:UNaIAParser.AsigMetodoContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#AsigMetodo.
+    def exitAsigMetodo(self, ctx:UNaIAParser.AsigMetodoContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#AsigMulti.
+    def enterAsigMulti(self, ctx:UNaIAParser.AsigMultiContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#AsigMulti.
+    def exitAsigMulti(self, ctx:UNaIAParser.AsigMultiContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#division.
+    def enterDivision(self, ctx:UNaIAParser.DivisionContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#division.
+    def exitDivision(self, ctx:UNaIAParser.DivisionContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#modelo.
+    def enterModelo(self, ctx:UNaIAParser.ModeloContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#modelo.
+    def exitModelo(self, ctx:UNaIAParser.ModeloContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#metodo.
+    def enterMetodo(self, ctx:UNaIAParser.MetodoContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#metodo.
+    def exitMetodo(self, ctx:UNaIAParser.MetodoContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#entrenamiento.
+    def enterEntrenamiento(self, ctx:UNaIAParser.EntrenamientoContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#entrenamiento.
+    def exitEntrenamiento(self, ctx:UNaIAParser.EntrenamientoContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#evaluacion.
+    def enterEvaluacion(self, ctx:UNaIAParser.EvaluacionContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#evaluacion.
+    def exitEvaluacion(self, ctx:UNaIAParser.EvaluacionContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#prediccion.
+    def enterPrediccion(self, ctx:UNaIAParser.PrediccionContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#prediccion.
+    def exitPrediccion(self, ctx:UNaIAParser.PrediccionContext):
         pass
 
 

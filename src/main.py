@@ -7,9 +7,9 @@ def main():
     lexer = UNaIALexer(StdinStream())
     stream = CommonTokenStream(lexer)
     parser = UNaIAParser(stream)
-    tree = parser.expr()      #Regla inicial de la gramatica
+    tree = parser.programa()      #Regla inicial de la gramatica
 
-    print(tree.toStringTree(lexer,parser))
+    #print(tree.toStringTree(lexer,parser))
 
     loader = MyVisitor()
     loader.visit(tree)

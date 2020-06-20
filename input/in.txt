@@ -1,1 +1,14 @@
-1+2*3/4-5-6*7*8
+datos = cargar("datos/testLogistic.csv")
+
+miModelo = regresionLogistica
+
+# datosEntrenamiento, datosPrueba = dividirDatos(datos)
+
+#miModelo.entrenar(datosEntrenamiento)
+miModelo.entrenar(datos)
+
+#predicciones = miModelo.predecir(datosPrueba)
+predicciones = miModelo.predecir(datos)
+
+#efectividad = miModelo.evaluar(datosPrueba)
+efectividad = miModelo.evaluar(datos)

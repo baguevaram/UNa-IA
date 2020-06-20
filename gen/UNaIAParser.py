@@ -11,16 +11,34 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\b")
-        buf.write("\33\4\2\t\2\4\3\t\3\4\4\t\4\3\2\3\2\3\2\7\2\f\n\2\f\2")
-        buf.write("\16\2\17\13\2\3\3\3\3\3\3\7\3\24\n\3\f\3\16\3\27\13\3")
-        buf.write("\3\4\3\4\3\4\2\2\5\2\4\6\2\4\3\2\3\4\3\2\5\6\2\31\2\b")
-        buf.write("\3\2\2\2\4\20\3\2\2\2\6\30\3\2\2\2\b\r\5\4\3\2\t\n\t\2")
-        buf.write("\2\2\n\f\5\4\3\2\13\t\3\2\2\2\f\17\3\2\2\2\r\13\3\2\2")
-        buf.write("\2\r\16\3\2\2\2\16\3\3\2\2\2\17\r\3\2\2\2\20\25\5\6\4")
-        buf.write("\2\21\22\t\3\2\2\22\24\5\6\4\2\23\21\3\2\2\2\24\27\3\2")
-        buf.write("\2\2\25\23\3\2\2\2\25\26\3\2\2\2\26\5\3\2\2\2\27\25\3")
-        buf.write("\2\2\2\30\31\7\7\2\2\31\7\3\2\2\2\4\r\25")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27")
+        buf.write("X\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
+        buf.write("\t\b\4\t\t\t\4\n\t\n\3\2\3\2\7\2\27\n\2\f\2\16\2\32\13")
+        buf.write("\2\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4")
+        buf.write("\3\4\3\4\3\4\3\4\3\4\3\4\5\4/\n\4\3\5\3\5\3\5\3\5\3\5")
+        buf.write("\3\5\3\5\5\58\n\5\3\5\3\5\3\6\3\6\3\7\3\7\3\7\5\7A\n\7")
+        buf.write("\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3")
+        buf.write("\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f")
+        buf.write("\16\20\22\2\3\3\2\t\16\2V\2\30\3\2\2\2\4\33\3\2\2\2\6")
+        buf.write(".\3\2\2\2\b\60\3\2\2\2\n;\3\2\2\2\f@\3\2\2\2\16B\3\2\2")
+        buf.write("\2\20I\3\2\2\2\22P\3\2\2\2\24\27\5\6\4\2\25\27\5\f\7\2")
+        buf.write("\26\24\3\2\2\2\26\25\3\2\2\2\27\32\3\2\2\2\30\26\3\2\2")
+        buf.write("\2\30\31\3\2\2\2\31\3\3\2\2\2\32\30\3\2\2\2\33\34\7\4")
+        buf.write("\2\2\34\35\7\22\2\2\35\36\7\25\2\2\36\37\7\23\2\2\37\5")
+        buf.write("\3\2\2\2 !\7\24\2\2!\"\7\21\2\2\"/\5\4\3\2#$\7\24\2\2")
+        buf.write("$%\7\21\2\2%/\5\n\6\2&\'\7\24\2\2\'(\7\21\2\2(/\5\f\7")
+        buf.write("\2)*\7\24\2\2*+\7\17\2\2+,\7\24\2\2,-\7\21\2\2-/\5\b\5")
+        buf.write("\2. \3\2\2\2.#\3\2\2\2.&\3\2\2\2.)\3\2\2\2/\7\3\2\2\2")
+        buf.write("\60\61\7\b\2\2\61\62\7\22\2\2\62\67\7\24\2\2\63\64\7\17")
+        buf.write("\2\2\64\65\7\26\2\2\65\66\7\17\2\2\668\7\26\2\2\67\63")
+        buf.write("\3\2\2\2\678\3\2\2\289\3\2\2\29:\7\23\2\2:\t\3\2\2\2;")
+        buf.write("<\t\2\2\2<\13\3\2\2\2=A\5\16\b\2>A\5\20\t\2?A\5\22\n\2")
+        buf.write("@=\3\2\2\2@>\3\2\2\2@?\3\2\2\2A\r\3\2\2\2BC\7\24\2\2C")
+        buf.write("D\7\20\2\2DE\7\5\2\2EF\7\22\2\2FG\7\24\2\2GH\7\23\2\2")
+        buf.write("H\17\3\2\2\2IJ\7\24\2\2JK\7\20\2\2KL\7\6\2\2LM\7\22\2")
+        buf.write("\2MN\7\24\2\2NO\7\23\2\2O\21\3\2\2\2PQ\7\24\2\2QR\7\20")
+        buf.write("\2\2RS\7\7\2\2ST\7\22\2\2TU\7\24\2\2UV\7\23\2\2V\23\3")
+        buf.write("\2\2\2\7\26\30.\67@")
         return buf.getvalue()
 
 
@@ -34,24 +52,52 @@ class UNaIAParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'+'", "'-'", "'*'", "'/'" ]
+    literalNames = [ "<INVALID>", "<INVALID>", "'cargar'", "'entrenar'", 
+                     "'evaluar'", "'predecir'", "'dividirDatos'", "'regresionLogistica'", 
+                     "'bayes'", "'knn'", "'svm'", "'arbolDeDesicion'", "'bosqueAleatorio'", 
+                     "','", "'.'", "'='", "'('", "')'" ]
 
-    symbolicNames = [ "<INVALID>", "MAS", "MENOS", "MULT", "DIV", "ENTERO", 
-                      "ESPACIO" ]
+    symbolicNames = [ "<INVALID>", "COMMENT", "CARGAR", "ENTRENAR", "EVALUAR", 
+                      "PREDECIR", "DIVIDIRDATOS", "REGRESIONLOGISTICA", 
+                      "BAYES", "KNN", "SVM", "ARBOLDEDESICION", "BOSQUEALEATORIO", 
+                      "COMA", "PUNTO", "ASIG", "PAR_IZQ", "PAR_DER", "ID", 
+                      "STRING", "NUMERO", "ESPACIO" ]
 
-    RULE_expr = 0
-    RULE_term = 1
-    RULE_factor = 2
+    RULE_programa = 0
+    RULE_datos = 1
+    RULE_asignacion = 2
+    RULE_division = 3
+    RULE_modelo = 4
+    RULE_metodo = 5
+    RULE_entrenamiento = 6
+    RULE_evaluacion = 7
+    RULE_prediccion = 8
 
-    ruleNames =  [ "expr", "term", "factor" ]
+    ruleNames =  [ "programa", "datos", "asignacion", "division", "modelo", 
+                   "metodo", "entrenamiento", "evaluacion", "prediccion" ]
 
     EOF = Token.EOF
-    MAS=1
-    MENOS=2
-    MULT=3
-    DIV=4
-    ENTERO=5
-    ESPACIO=6
+    COMMENT=1
+    CARGAR=2
+    ENTRENAR=3
+    EVALUAR=4
+    PREDECIR=5
+    DIVIDIRDATOS=6
+    REGRESIONLOGISTICA=7
+    BAYES=8
+    KNN=9
+    SVM=10
+    ARBOLDEDESICION=11
+    BOSQUEALEATORIO=12
+    COMA=13
+    PUNTO=14
+    ASIG=15
+    PAR_IZQ=16
+    PAR_DER=17
+    ID=18
+    STRING=19
+    NUMERO=20
+    ESPACIO=21
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -62,203 +108,782 @@ class UNaIAParser ( Parser ):
 
 
 
-    class ExprContext(ParserRuleContext):
+    class ProgramaContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def term(self, i:int=None):
+        def asignacion(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(UNaIAParser.TermContext)
+                return self.getTypedRuleContexts(UNaIAParser.AsignacionContext)
             else:
-                return self.getTypedRuleContext(UNaIAParser.TermContext,i)
+                return self.getTypedRuleContext(UNaIAParser.AsignacionContext,i)
 
 
-        def MAS(self, i:int=None):
+        def metodo(self, i:int=None):
             if i is None:
-                return self.getTokens(UNaIAParser.MAS)
+                return self.getTypedRuleContexts(UNaIAParser.MetodoContext)
             else:
-                return self.getToken(UNaIAParser.MAS, i)
+                return self.getTypedRuleContext(UNaIAParser.MetodoContext,i)
 
-        def MENOS(self, i:int=None):
-            if i is None:
-                return self.getTokens(UNaIAParser.MENOS)
-            else:
-                return self.getToken(UNaIAParser.MENOS, i)
 
         def getRuleIndex(self):
-            return UNaIAParser.RULE_expr
+            return UNaIAParser.RULE_programa
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpr" ):
-                listener.enterExpr(self)
+            if hasattr( listener, "enterPrograma" ):
+                listener.enterPrograma(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpr" ):
-                listener.exitExpr(self)
+            if hasattr( listener, "exitPrograma" ):
+                listener.exitPrograma(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExpr" ):
-                return visitor.visitExpr(self)
+            if hasattr( visitor, "visitPrograma" ):
+                return visitor.visitPrograma(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def expr(self):
+    def programa(self):
 
-        localctx = UNaIAParser.ExprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 0, self.RULE_expr)
+        localctx = UNaIAParser.ProgramaContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 0, self.RULE_programa)
         self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 6
-            self.term()
-            self.state = 11
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while _la==UNaIAParser.MAS or _la==UNaIAParser.MENOS:
-                self.state = 7
-                _la = self._input.LA(1)
-                if not(_la==UNaIAParser.MAS or _la==UNaIAParser.MENOS):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 8
-                self.term()
-                self.state = 13
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class TermContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def factor(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(UNaIAParser.FactorContext)
-            else:
-                return self.getTypedRuleContext(UNaIAParser.FactorContext,i)
-
-
-        def MULT(self, i:int=None):
-            if i is None:
-                return self.getTokens(UNaIAParser.MULT)
-            else:
-                return self.getToken(UNaIAParser.MULT, i)
-
-        def DIV(self, i:int=None):
-            if i is None:
-                return self.getTokens(UNaIAParser.DIV)
-            else:
-                return self.getToken(UNaIAParser.DIV, i)
-
-        def getRuleIndex(self):
-            return UNaIAParser.RULE_term
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTerm" ):
-                listener.enterTerm(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTerm" ):
-                listener.exitTerm(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTerm" ):
-                return visitor.visitTerm(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def term(self):
-
-        localctx = UNaIAParser.TermContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 2, self.RULE_term)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 14
-            self.factor()
-            self.state = 19
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while _la==UNaIAParser.MULT or _la==UNaIAParser.DIV:
-                self.state = 15
-                _la = self._input.LA(1)
-                if not(_la==UNaIAParser.MULT or _la==UNaIAParser.DIV):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 16
-                self.factor()
-                self.state = 21
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class FactorContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def ENTERO(self):
-            return self.getToken(UNaIAParser.ENTERO, 0)
-
-        def getRuleIndex(self):
-            return UNaIAParser.RULE_factor
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFactor" ):
-                listener.enterFactor(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFactor" ):
-                listener.exitFactor(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFactor" ):
-                return visitor.visitFactor(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def factor(self):
-
-        localctx = UNaIAParser.FactorContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_factor)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 22
-            self.match(UNaIAParser.ENTERO)
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==UNaIAParser.ID:
+                self.state = 20
+                self._errHandler.sync(self)
+                la_ = self._interp.adaptivePredict(self._input,0,self._ctx)
+                if la_ == 1:
+                    self.state = 18
+                    self.asignacion()
+                    pass
+
+                elif la_ == 2:
+                    self.state = 19
+                    self.metodo()
+                    pass
+
+
+                self.state = 24
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class DatosContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def CARGAR(self):
+            return self.getToken(UNaIAParser.CARGAR, 0)
+
+        def PAR_IZQ(self):
+            return self.getToken(UNaIAParser.PAR_IZQ, 0)
+
+        def STRING(self):
+            return self.getToken(UNaIAParser.STRING, 0)
+
+        def PAR_DER(self):
+            return self.getToken(UNaIAParser.PAR_DER, 0)
+
+        def getRuleIndex(self):
+            return UNaIAParser.RULE_datos
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDatos" ):
+                listener.enterDatos(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDatos" ):
+                listener.exitDatos(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDatos" ):
+                return visitor.visitDatos(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def datos(self):
+
+        localctx = UNaIAParser.DatosContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 2, self.RULE_datos)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 25
+            self.match(UNaIAParser.CARGAR)
+            self.state = 26
+            self.match(UNaIAParser.PAR_IZQ)
+            self.state = 27
+            self.match(UNaIAParser.STRING)
+            self.state = 28
+            self.match(UNaIAParser.PAR_DER)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class AsignacionContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+
+        def getRuleIndex(self):
+            return UNaIAParser.RULE_asignacion
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class AsigMetodoContext(AsignacionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a UNaIAParser.AsignacionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self):
+            return self.getToken(UNaIAParser.ID, 0)
+        def ASIG(self):
+            return self.getToken(UNaIAParser.ASIG, 0)
+        def metodo(self):
+            return self.getTypedRuleContext(UNaIAParser.MetodoContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAsigMetodo" ):
+                listener.enterAsigMetodo(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAsigMetodo" ):
+                listener.exitAsigMetodo(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAsigMetodo" ):
+                return visitor.visitAsigMetodo(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AsigMultiContext(AsignacionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a UNaIAParser.AsignacionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self, i:int=None):
+            if i is None:
+                return self.getTokens(UNaIAParser.ID)
+            else:
+                return self.getToken(UNaIAParser.ID, i)
+        def COMA(self):
+            return self.getToken(UNaIAParser.COMA, 0)
+        def ASIG(self):
+            return self.getToken(UNaIAParser.ASIG, 0)
+        def division(self):
+            return self.getTypedRuleContext(UNaIAParser.DivisionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAsigMulti" ):
+                listener.enterAsigMulti(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAsigMulti" ):
+                listener.exitAsigMulti(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAsigMulti" ):
+                return visitor.visitAsigMulti(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AsigModeloContext(AsignacionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a UNaIAParser.AsignacionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self):
+            return self.getToken(UNaIAParser.ID, 0)
+        def ASIG(self):
+            return self.getToken(UNaIAParser.ASIG, 0)
+        def modelo(self):
+            return self.getTypedRuleContext(UNaIAParser.ModeloContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAsigModelo" ):
+                listener.enterAsigModelo(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAsigModelo" ):
+                listener.exitAsigModelo(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAsigModelo" ):
+                return visitor.visitAsigModelo(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AsigDatosContext(AsignacionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a UNaIAParser.AsignacionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self):
+            return self.getToken(UNaIAParser.ID, 0)
+        def ASIG(self):
+            return self.getToken(UNaIAParser.ASIG, 0)
+        def datos(self):
+            return self.getTypedRuleContext(UNaIAParser.DatosContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAsigDatos" ):
+                listener.enterAsigDatos(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAsigDatos" ):
+                listener.exitAsigDatos(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAsigDatos" ):
+                return visitor.visitAsigDatos(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+    def asignacion(self):
+
+        localctx = UNaIAParser.AsignacionContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 4, self.RULE_asignacion)
+        try:
+            self.state = 44
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,2,self._ctx)
+            if la_ == 1:
+                localctx = UNaIAParser.AsigDatosContext(self, localctx)
+                self.enterOuterAlt(localctx, 1)
+                self.state = 30
+                self.match(UNaIAParser.ID)
+                self.state = 31
+                self.match(UNaIAParser.ASIG)
+                self.state = 32
+                self.datos()
+                pass
+
+            elif la_ == 2:
+                localctx = UNaIAParser.AsigModeloContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
+                self.state = 33
+                self.match(UNaIAParser.ID)
+                self.state = 34
+                self.match(UNaIAParser.ASIG)
+                self.state = 35
+                self.modelo()
+                pass
+
+            elif la_ == 3:
+                localctx = UNaIAParser.AsigMetodoContext(self, localctx)
+                self.enterOuterAlt(localctx, 3)
+                self.state = 36
+                self.match(UNaIAParser.ID)
+                self.state = 37
+                self.match(UNaIAParser.ASIG)
+                self.state = 38
+                self.metodo()
+                pass
+
+            elif la_ == 4:
+                localctx = UNaIAParser.AsigMultiContext(self, localctx)
+                self.enterOuterAlt(localctx, 4)
+                self.state = 39
+                self.match(UNaIAParser.ID)
+                self.state = 40
+                self.match(UNaIAParser.COMA)
+                self.state = 41
+                self.match(UNaIAParser.ID)
+                self.state = 42
+                self.match(UNaIAParser.ASIG)
+                self.state = 43
+                self.division()
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class DivisionContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def DIVIDIRDATOS(self):
+            return self.getToken(UNaIAParser.DIVIDIRDATOS, 0)
+
+        def PAR_IZQ(self):
+            return self.getToken(UNaIAParser.PAR_IZQ, 0)
+
+        def ID(self):
+            return self.getToken(UNaIAParser.ID, 0)
+
+        def PAR_DER(self):
+            return self.getToken(UNaIAParser.PAR_DER, 0)
+
+        def COMA(self, i:int=None):
+            if i is None:
+                return self.getTokens(UNaIAParser.COMA)
+            else:
+                return self.getToken(UNaIAParser.COMA, i)
+
+        def NUMERO(self, i:int=None):
+            if i is None:
+                return self.getTokens(UNaIAParser.NUMERO)
+            else:
+                return self.getToken(UNaIAParser.NUMERO, i)
+
+        def getRuleIndex(self):
+            return UNaIAParser.RULE_division
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDivision" ):
+                listener.enterDivision(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDivision" ):
+                listener.exitDivision(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDivision" ):
+                return visitor.visitDivision(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def division(self):
+
+        localctx = UNaIAParser.DivisionContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 6, self.RULE_division)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 46
+            self.match(UNaIAParser.DIVIDIRDATOS)
+            self.state = 47
+            self.match(UNaIAParser.PAR_IZQ)
+            self.state = 48
+            self.match(UNaIAParser.ID)
+            self.state = 53
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==UNaIAParser.COMA:
+                self.state = 49
+                self.match(UNaIAParser.COMA)
+                self.state = 50
+                self.match(UNaIAParser.NUMERO)
+                self.state = 51
+                self.match(UNaIAParser.COMA)
+                self.state = 52
+                self.match(UNaIAParser.NUMERO)
+
+
+            self.state = 55
+            self.match(UNaIAParser.PAR_DER)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ModeloContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def REGRESIONLOGISTICA(self):
+            return self.getToken(UNaIAParser.REGRESIONLOGISTICA, 0)
+
+        def BAYES(self):
+            return self.getToken(UNaIAParser.BAYES, 0)
+
+        def KNN(self):
+            return self.getToken(UNaIAParser.KNN, 0)
+
+        def SVM(self):
+            return self.getToken(UNaIAParser.SVM, 0)
+
+        def ARBOLDEDESICION(self):
+            return self.getToken(UNaIAParser.ARBOLDEDESICION, 0)
+
+        def BOSQUEALEATORIO(self):
+            return self.getToken(UNaIAParser.BOSQUEALEATORIO, 0)
+
+        def getRuleIndex(self):
+            return UNaIAParser.RULE_modelo
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterModelo" ):
+                listener.enterModelo(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitModelo" ):
+                listener.exitModelo(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitModelo" ):
+                return visitor.visitModelo(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def modelo(self):
+
+        localctx = UNaIAParser.ModeloContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 8, self.RULE_modelo)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 57
+            _la = self._input.LA(1)
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << UNaIAParser.REGRESIONLOGISTICA) | (1 << UNaIAParser.BAYES) | (1 << UNaIAParser.KNN) | (1 << UNaIAParser.SVM) | (1 << UNaIAParser.ARBOLDEDESICION) | (1 << UNaIAParser.BOSQUEALEATORIO))) != 0)):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class MetodoContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def entrenamiento(self):
+            return self.getTypedRuleContext(UNaIAParser.EntrenamientoContext,0)
+
+
+        def evaluacion(self):
+            return self.getTypedRuleContext(UNaIAParser.EvaluacionContext,0)
+
+
+        def prediccion(self):
+            return self.getTypedRuleContext(UNaIAParser.PrediccionContext,0)
+
+
+        def getRuleIndex(self):
+            return UNaIAParser.RULE_metodo
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMetodo" ):
+                listener.enterMetodo(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMetodo" ):
+                listener.exitMetodo(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMetodo" ):
+                return visitor.visitMetodo(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def metodo(self):
+
+        localctx = UNaIAParser.MetodoContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 10, self.RULE_metodo)
+        try:
+            self.state = 62
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 59
+                self.entrenamiento()
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 60
+                self.evaluacion()
+                pass
+
+            elif la_ == 3:
+                self.enterOuterAlt(localctx, 3)
+                self.state = 61
+                self.prediccion()
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class EntrenamientoContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def ID(self, i:int=None):
+            if i is None:
+                return self.getTokens(UNaIAParser.ID)
+            else:
+                return self.getToken(UNaIAParser.ID, i)
+
+        def PUNTO(self):
+            return self.getToken(UNaIAParser.PUNTO, 0)
+
+        def ENTRENAR(self):
+            return self.getToken(UNaIAParser.ENTRENAR, 0)
+
+        def PAR_IZQ(self):
+            return self.getToken(UNaIAParser.PAR_IZQ, 0)
+
+        def PAR_DER(self):
+            return self.getToken(UNaIAParser.PAR_DER, 0)
+
+        def getRuleIndex(self):
+            return UNaIAParser.RULE_entrenamiento
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterEntrenamiento" ):
+                listener.enterEntrenamiento(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitEntrenamiento" ):
+                listener.exitEntrenamiento(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEntrenamiento" ):
+                return visitor.visitEntrenamiento(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def entrenamiento(self):
+
+        localctx = UNaIAParser.EntrenamientoContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 12, self.RULE_entrenamiento)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 64
+            self.match(UNaIAParser.ID)
+            self.state = 65
+            self.match(UNaIAParser.PUNTO)
+            self.state = 66
+            self.match(UNaIAParser.ENTRENAR)
+            self.state = 67
+            self.match(UNaIAParser.PAR_IZQ)
+            self.state = 68
+            self.match(UNaIAParser.ID)
+            self.state = 69
+            self.match(UNaIAParser.PAR_DER)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class EvaluacionContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def ID(self, i:int=None):
+            if i is None:
+                return self.getTokens(UNaIAParser.ID)
+            else:
+                return self.getToken(UNaIAParser.ID, i)
+
+        def PUNTO(self):
+            return self.getToken(UNaIAParser.PUNTO, 0)
+
+        def EVALUAR(self):
+            return self.getToken(UNaIAParser.EVALUAR, 0)
+
+        def PAR_IZQ(self):
+            return self.getToken(UNaIAParser.PAR_IZQ, 0)
+
+        def PAR_DER(self):
+            return self.getToken(UNaIAParser.PAR_DER, 0)
+
+        def getRuleIndex(self):
+            return UNaIAParser.RULE_evaluacion
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterEvaluacion" ):
+                listener.enterEvaluacion(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitEvaluacion" ):
+                listener.exitEvaluacion(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEvaluacion" ):
+                return visitor.visitEvaluacion(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def evaluacion(self):
+
+        localctx = UNaIAParser.EvaluacionContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 14, self.RULE_evaluacion)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 71
+            self.match(UNaIAParser.ID)
+            self.state = 72
+            self.match(UNaIAParser.PUNTO)
+            self.state = 73
+            self.match(UNaIAParser.EVALUAR)
+            self.state = 74
+            self.match(UNaIAParser.PAR_IZQ)
+            self.state = 75
+            self.match(UNaIAParser.ID)
+            self.state = 76
+            self.match(UNaIAParser.PAR_DER)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class PrediccionContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def ID(self, i:int=None):
+            if i is None:
+                return self.getTokens(UNaIAParser.ID)
+            else:
+                return self.getToken(UNaIAParser.ID, i)
+
+        def PUNTO(self):
+            return self.getToken(UNaIAParser.PUNTO, 0)
+
+        def PREDECIR(self):
+            return self.getToken(UNaIAParser.PREDECIR, 0)
+
+        def PAR_IZQ(self):
+            return self.getToken(UNaIAParser.PAR_IZQ, 0)
+
+        def PAR_DER(self):
+            return self.getToken(UNaIAParser.PAR_DER, 0)
+
+        def getRuleIndex(self):
+            return UNaIAParser.RULE_prediccion
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPrediccion" ):
+                listener.enterPrediccion(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPrediccion" ):
+                listener.exitPrediccion(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrediccion" ):
+                return visitor.visitPrediccion(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def prediccion(self):
+
+        localctx = UNaIAParser.PrediccionContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 16, self.RULE_prediccion)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 78
+            self.match(UNaIAParser.ID)
+            self.state = 79
+            self.match(UNaIAParser.PUNTO)
+            self.state = 80
+            self.match(UNaIAParser.PREDECIR)
+            self.state = 81
+            self.match(UNaIAParser.PAR_IZQ)
+            self.state = 82
+            self.match(UNaIAParser.ID)
+            self.state = 83
+            self.match(UNaIAParser.PAR_DER)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
