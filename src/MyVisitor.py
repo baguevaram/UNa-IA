@@ -5,13 +5,14 @@ from UNaIAParser import UNaIAParser
 # Importacion de los modelos de clasificación de sklearn
 
 from sklearn.linear_model import LogisticRegression
-
+import pandas as pd
 import csv
 import os
+
+
 # This class defines a complete generic visitor for a parse tree produced by UNaIAParser.
 
 class MyVisitor(ParseTreeVisitor):
-
     # podemos hacer tablas aparte para los datos y los modelos, asi es mas facil identificar si existen los ids
     tabla = {}
 
@@ -23,33 +24,46 @@ class MyVisitor(ParseTreeVisitor):
         # Visit a parse tree produced by UNaIAParser#datos.
 
     def visitDatos(self, ctx: UNaIAParser.DatosContext):
-
-        return str(ctx.STRING())
+        valor = str(ctx.STRING(1)).replace("\"", "")
+        return (str(ctx.STRING(0)).replace('"', ""), valor)
 
         # Visit a parse tree produced by UNaIAParser#AsigDatos.
 
     def visitAsigDatos(self, ctx: UNaIAParser.AsigDatosContext):
         res = self.visit(ctx.datos())
+        df = pd.read_csv(res[0])
+        if res[1] == "None":
+            df = pd.read_csv(res[0], header=None)
+            etiquetas = df[res[1]]
+            caracteristicas = df.drop(res[1], axis=1)
+        else:
+            etiquetas = df.iloc[:, -1]
+            caracteristicas = df.iloc[:, :-1]
 
-        self.tabla[str(ctx.ID())] = str(res).replace('"',"")
-        print("Agregué", ctx.ID(), "a la tabla y el nombre del archivo", res)
-        print(self.tabla)
+        datos_dict = {
+            "df": df,
+            "etiquetas": etiquetas,
+            "caracteristicas": caracteristicas
+        }
+        self.tabla[str(ctx.ID())] = datos_dict
 
+        #print("Agregué", ctx.ID(), "a la tabla y el nombre del archivo", res)
+        #print(self.tabla)
         return "Salí de visitAsigDatos"
 
         # Visit a parse tree produced by UNaIAParser#AsigModelo.
 
     def visitAsigModelo(self, ctx: UNaIAParser.AsigModeloContext):
-        #Se visita el Nodo modelo y se agraga a la tabla de simbolos
+        # Se visita el Nodo modelo y se agraga a la tabla de simbolos
         res = self.visit(ctx.modelo())
 
         if res == 'regresionLogistica':
             modelo = LogisticRegression()
-        #TODO los demas modelos
+        # TODO los demas modelos
 
         self.tabla[str(ctx.ID())] = modelo
-        print("Agregué",ctx.ID(),"a la tabla y es un",modelo)
-        print(self.tabla)
+        #print("Agregué", ctx.ID(), "a la tabla y es un", modelo)
+        #print(self.tabla)
 
         return "salí de asigModelo"
 
@@ -58,7 +72,7 @@ class MyVisitor(ParseTreeVisitor):
     def visitAsigMetodo(self, ctx: UNaIAParser.AsigMetodoContext):
 
         res = self.visit(ctx.metodo())
-        print("Agrego a la tabla",ctx.ID(),"contienen",res)
+        print("Agrego a la tabla", ctx.ID(), "contienen", res)
         self.tabla[str(ctx.ID())] = res
         print(self.tabla)
         return "salí de visitAsigMetodo"
@@ -71,6 +85,7 @@ class MyVisitor(ParseTreeVisitor):
         # Visit a parse tree produced by UNaIAParser#division.
 
     def visitDivision(self, ctx: UNaIAParser.DivisionContext):
+        # Se deberia verificar que no de menos o mas de uno
 
         return self.visitChildren(ctx)
 
@@ -89,49 +104,24 @@ class MyVisitor(ParseTreeVisitor):
 
     def visitEntrenamiento(self, ctx: UNaIAParser.EntrenamientoContext):
         print(ctx.ID(1))
-        fileName = self.tabla[str(ctx.ID(1))]
-        caracteristicas=[]
-        etiquetas=[]
-        with open(fileName) as csvarchivo:
-            entrada = csv.reader(csvarchivo)
-            for reg in entrada:
-                caracteristicas.append(reg[:-1])
-                etiquetas.append(reg[-1])
-
-
-        for i in range(len(caracteristicas)):
-            for j in range(len(caracteristicas[i])):
-                caracteristicas[i][j] = float(caracteristicas[i][j])
-
-        etiquetas = [int(x) for x in etiquetas]
-
-        print(caracteristicas)
-        print(etiquetas)
-
-        self.tabla[str(ctx.ID(0))].fit(caracteristicas,etiquetas)
+        datos = self.tabla[str(ctx.ID(1))]
+        caracteristicas = datos["caracteristicas"]
+        etiquetas = datos["etiquetas"]
+        #print(caracteristicas)
+        #print(etiquetas)
+        self.tabla[str(ctx.ID(0))].fit(caracteristicas, etiquetas)
         return self.visitChildren(ctx)
 
         # Visit a parse tree produced by UNaIAParser#evaluacion.
 
     def visitEvaluacion(self, ctx: UNaIAParser.EvaluacionContext):
 
-        fileName = self.tabla[str(ctx.ID(1))]
-        caracteristicas = []
-        etiquetas = []
-        with open(fileName) as csvarchivo:
-            entrada = csv.reader(csvarchivo)
-            for reg in entrada:
-                caracteristicas.append(reg[:-1])
-                etiquetas.append(reg[-1])
+        datos = self.tabla[str(ctx.ID(1))]
+        caracteristicas = datos["caracteristicas"]
+        etiquetas = datos["etiquetas"]
 
-        for i in range(len(caracteristicas)):
-            for j in range(len(caracteristicas[i])):
-                caracteristicas[i][j] = float(caracteristicas[i][j])
-
-        etiquetas = [int(x) for x in etiquetas]
-
-        print(caracteristicas)
-        print(etiquetas)
+        #print(caracteristicas)
+        #print(etiquetas)
 
         res = self.tabla[str(ctx.ID(0))].score(caracteristicas, etiquetas)
 
@@ -143,22 +133,13 @@ class MyVisitor(ParseTreeVisitor):
         # Visit a parse tree produced by UNaIAParser#prediccion.
 
     def visitPrediccion(self, ctx: UNaIAParser.PrediccionContext):
-        fileName = self.tabla[str(ctx.ID(1))]
-        caracteristicas = []
-        with open(fileName) as csvarchivo:
-            entrada = csv.reader(csvarchivo)
-            for reg in entrada:
-                caracteristicas.append(reg[:-1])
-
-        for i in range(len(caracteristicas)):
-            for j in range(len(caracteristicas[i])):
-                caracteristicas[i][j] = float(caracteristicas[i][j])
+        datos = self.tabla[str(ctx.ID(1))]
+        caracteristicas = datos["caracteristicas"]
 
         predictions = self.tabla[str(ctx.ID(0))].predict(caracteristicas)
-        print("Estas son mis predicciones")
-        print(self.tabla[str(ctx.ID(0))])
-        print(predictions)
-
+        #print("Estas son mis predicciones")
+        #print(self.tabla[str(ctx.ID(0))])
+        #print(predictions)
 
         return predictions
 

@@ -1,4 +1,4 @@
-datos = cargar("datos/testLogistic.csv")
+datos = cargar("../datos/testLogistic.csv")
 
 miModelo = regresionLogistica
 
@@ -12,3 +12,6 @@ predicciones = miModelo.predecir(datos)
 
 #efectividad = miModelo.evaluar(datosPrueba)
 efectividad = miModelo.evaluar(datos)
+
+[miKmeans: {"caracteristicas": carac, "etiquetas": etique, "resultados": res}]
+(datos -> miModelo):datos_dist -> MiModelo2

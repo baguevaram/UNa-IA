@@ -5,7 +5,7 @@ grammar UNaIA;
 programa : (asignacion | metodo)*;
 
 //El archivo de datos a cargar debe ser un csv de la forma datos, Etiqueta
-datos: CARGAR PAR_IZQ STRING PAR_DER ;
+datos: CARGAR PAR_IZQ STRING (COMA STRING)? PAR_DER;
 
 asignacion : ID ASIG datos                 #AsigDatos
             |ID ASIG modelo                #AsigModelo
