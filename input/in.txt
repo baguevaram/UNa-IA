@@ -1,17 +1,12 @@
-datos = cargar("../datos/testLogistic.csv")
-
-miModelo = regresionLogistica
-
-# datosEntrenamiento, datosPrueba = dividirDatos(datos)
-
-#miModelo.entrenar(datosEntrenamiento)
-miModelo.entrenar(datos)
-
-#predicciones = miModelo.predecir(datosPrueba)
-predicciones = miModelo.predecir(datos)
-
-#efectividad = miModelo.evaluar(datosPrueba)
-efectividad = miModelo.evaluar(datos)
-
-[miKmeans: {"caracteristicas": carac, "etiquetas": etique, "resultados": res}]
-(datos -> miModelo):datos_dist -> MiModelo2
+datosDeEjemplo = ejemplos("../datos/testLogistic.csv")
+datosAPredecir = datos("../datos/testDatos.csv")
+miModelo = svm
+datosEntrenamiento, datosPrueba = dividirDatos(datosDeEjemplo, 30)
+miModelo.entrenar(datosEntrenamiento)
+datosPredicciones = miModelo.predecir(datosAPredecir)
+efectividad = miModelo.evaluar(datosPrueba)
+MiModelo2 = arbolDeDecision
+datos2Entrenamiento, datos2Prueba = dividirDatos(datosPredicciones, 20)
+MiModelo2.entrenar(datos2Entrenamiento)
+datos2Predicciones = MiModelo2.predecir(datosAPredecir)
+efectividad2 = MiModelo2.evaluar(datosPrueba)

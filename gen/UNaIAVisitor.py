@@ -14,8 +14,13 @@ class UNaIAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by UNaIAParser#datos.
-    def visitDatos(self, ctx:UNaIAParser.DatosContext):
+    # Visit a parse tree produced by UNaIAParser#DatosEjemplos.
+    def visitDatosEjemplos(self, ctx:UNaIAParser.DatosEjemplosContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by UNaIAParser#DatosDatos.
+    def visitDatosDatos(self, ctx:UNaIAParser.DatosDatosContext):
         return self.visitChildren(ctx)
 
 

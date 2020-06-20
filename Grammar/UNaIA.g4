@@ -5,7 +5,9 @@ grammar UNaIA;
 programa : (asignacion | metodo)*;
 
 //El archivo de datos a cargar debe ser un csv de la forma datos, Etiqueta
-datos: CARGAR PAR_IZQ STRING (COMA STRING)? PAR_DER;
+datos: EJEMPLOS PAR_IZQ STRING (COMA STRING)? PAR_DER #DatosEjemplos
+       | DATOS PAR_IZQ STRING PAR_DER #DatosDatos;
+
 
 asignacion : ID ASIG datos                 #AsigDatos
             |ID ASIG modelo                #AsigModelo
@@ -13,7 +15,7 @@ asignacion : ID ASIG datos                 #AsigDatos
             |ID COMA ID ASIG division      #AsigMulti
             ;
 
-division: DIVIDIRDATOS PAR_IZQ ID (COMA NUMERO COMA NUMERO)? PAR_DER;
+division: DIVIDIRDATOS PAR_IZQ ID (COMA NUMERO)? PAR_DER;
 
 modelo: (REGRESIONLOGISTICA |
             BAYES|
@@ -38,7 +40,9 @@ COMMENT
  ;
 
 //-------------Palabras reservadas
-CARGAR : 'cargar';
+EJEMPLOS : 'ejemplos';
+
+DATOS : 'datos';
 
 ENTRENAR: 'entrenar';
 
@@ -56,7 +60,7 @@ KNN: 'knn';
 
 SVM: 'svm';
 
-ARBOLDEDESICION: 'arbolDeDesicion';
+ARBOLDEDESICION: 'arbolDeDecision';
 
 BOSQUEALEATORIO: 'bosqueAleatorio';
 

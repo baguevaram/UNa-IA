@@ -17,12 +17,21 @@ class UNaIAListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by UNaIAParser#datos.
-    def enterDatos(self, ctx:UNaIAParser.DatosContext):
+    # Enter a parse tree produced by UNaIAParser#DatosEjemplos.
+    def enterDatosEjemplos(self, ctx:UNaIAParser.DatosEjemplosContext):
         pass
 
-    # Exit a parse tree produced by UNaIAParser#datos.
-    def exitDatos(self, ctx:UNaIAParser.DatosContext):
+    # Exit a parse tree produced by UNaIAParser#DatosEjemplos.
+    def exitDatosEjemplos(self, ctx:UNaIAParser.DatosEjemplosContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#DatosDatos.
+    def enterDatosDatos(self, ctx:UNaIAParser.DatosDatosContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#DatosDatos.
+    def exitDatosDatos(self, ctx:UNaIAParser.DatosDatosContext):
         pass
 
 
