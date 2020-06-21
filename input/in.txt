@@ -1,8 +1,8 @@
 datosDeEjemplo = ejemplos("../datos/testLogistic.csv")
 #reporte(datosDeEjemplo, 10, 2)
 datosAPredecir = datos("../datos/testDatos.csv")
-miModelo = auto
-#miModelo = arbolDeDecision
+#miModelo = auto
+miModelo = arbolDeDecision
 datosEntrenamiento, datosPrueba = dividirDatos(datosDeEjemplo, 30)
 miModelo.entrenar(datosEntrenamiento)
 datosPredicciones = miModelo.predecir(datosAPredecir)

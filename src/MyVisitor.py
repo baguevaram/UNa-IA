@@ -18,6 +18,8 @@ import numpy as np
 import pylab as pl
 from sklearn.metrics import accuracy_score, confusion_matrix
 import autosklearn.classification
+import matplotlib.pyplot as plt
+from sklearn.model_selection import learning_curve
 
 import pandas as pd
 import csv
@@ -29,6 +31,42 @@ import os
 class MyVisitor(ParseTreeVisitor):
     # podemos hacer tablas aparte para los datos y los modelos, asi es mas facil identificar si existen los ids
     tabla = {}
+
+    def plot_learning_curve(self, estimator, title, X, y, axes=None, ylim=None, cv=None,
+                            n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
+        if axes is None:
+            _, axes = plt.subplots(1, 1)
+
+        axes.set_title(title)
+        if ylim is not None:
+            axes.set_ylim(*ylim)
+        axes.set_xlabel("Ejemplos de Entrenamiento")
+        axes.set_ylabel("Puntaje")
+
+        train_sizes, train_scores, test_scores, fit_times, _ = \
+            learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs,
+                           train_sizes=train_sizes,
+                           return_times=True)
+        train_scores_mean = np.mean(train_scores, axis=1)
+        train_scores_std = np.std(train_scores, axis=1)
+        test_scores_mean = np.mean(test_scores, axis=1)
+        test_scores_std = np.std(test_scores, axis=1)
+        # fit_times_mean = np.mean(fit_times, axis=1)
+        # fit_times_std = np.std(fit_times, axis=1)
+
+        # Plot learning curve
+        axes.grid()
+        axes.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                             train_scores_mean + train_scores_std, alpha=0.1,
+                             color="r")
+        axes.fill_between(train_sizes, test_scores_mean - test_scores_std,
+                             test_scores_mean + test_scores_std, alpha=0.1,
+                             color="g")
+        axes.plot(train_sizes, train_scores_mean, 'o-', color="r",
+                     label="Puntaje de entrenamiento")
+        axes.plot(train_sizes, test_scores_mean, 'o-', color="g",
+                     label="Puntaje de validación cruzada")
+        axes.legend(loc="best")
 
     # Función para visualizar un conjunto de datos en 2D
     def plot_data(self,X, y):  # Función para graficar datos (X,y)
@@ -313,6 +351,11 @@ class MyVisitor(ParseTreeVisitor):
         self.plot_decision_region(caracteristicas.values, self.gen_pred_fun(self.tabla[str(ctx.ID(0))]), num)
         self.plot_data(caracteristicas.values, etiquetas.values)
         pl.show()
+
+        if str(self.tabla[str(ctx.ID(0))])[0:4] != "Auto":
+            print("esta es mi curva de aprendizaje")
+            self.plot_learning_curve(self.tabla[str(ctx.ID(0))], "Curva de aprendizaje", caracteristicas, etiquetas, axes=None, ylim=None, cv=None)
+            plt.show()
         return self.visitChildren(ctx)
 
 del UNaIAParser
