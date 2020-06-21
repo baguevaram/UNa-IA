@@ -17,7 +17,7 @@ import sklearn.datasets
 import numpy as np
 import pylab as pl
 from sklearn.metrics import accuracy_score, confusion_matrix
-#import autosklearn.classification
+import autosklearn.classification
 
 import pandas as pd
 import csv
@@ -25,23 +25,6 @@ import os
 
 
 # This class defines a complete generic visitor for a parse tree produced by UNaIAParser.
-
-
-
-# X, y = sklearn.datasets.load_digits(return_X_y=True)
-# X_train, X_test, y_train, y_test = \
-#     sklearn.model_selection.train_test_split(X, y, random_state=1)
-# automl = autosklearn.classification.AutoSklearnClassifier()
-# automl.fit(X_train, y_train)
-# y_hat = automl.predict(X_test)
-# print("Accuracy score", accuracy_score(y_test, y_hat))
-
-class SemanticError(Exception):
-
-    def __init__(self, message):
-        self.message = message
-    pass
-
 
 class MyVisitor(ParseTreeVisitor):
     # podemos hacer tablas aparte para los datos y los modelos, asi es mas facil identificar si existen los ids
@@ -66,7 +49,7 @@ class MyVisitor(ParseTreeVisitor):
         return pred_fun
 
     # Función para visualizar de la superficie de decisión de un clasificador
-    def plot_decision_region(self,X, pred_fun):
+    def plot_decision_region(self,X, pred_fun, num):
         min_x = np.min(X[:, 0])
         max_x = np.max(X[:, 0])
         min_y = np.min(X[:, 1])
@@ -75,14 +58,15 @@ class MyVisitor(ParseTreeVisitor):
         max_x = max_x + (max_x - min_x) * 0.05
         min_y = min_y - (max_y - min_y) * 0.05
         max_y = max_y + (max_y - min_y) * 0.05
-        x_vals = np.linspace(min_x, max_x, 100)
-        y_vals = np.linspace(min_y, max_y, 100)
+        x_vals = np.linspace(min_x, max_x, num)
+        y_vals = np.linspace(min_y, max_y, num)
         XX, YY = np.meshgrid(x_vals, y_vals)
         grid_r, grid_c = XX.shape
         ZZ = np.zeros((grid_r, grid_c))
         for i in range(grid_r):
             for j in range(grid_c):
                 ZZ[i, j] = pred_fun(XX[i, j], YY[i, j])
+
         pl.contourf(XX, YY, ZZ, 100, cmap=pl.cm.coolwarm, vmin=-1, vmax=2)
         pl.colorbar()
         pl.xlabel("x")
@@ -148,8 +132,8 @@ class MyVisitor(ParseTreeVisitor):
             modelo = DecisionTreeClassifier()
         elif res == 'bosqueAleatorio':
             modelo = RandomForestClassifier()
-        #elif res == 'auto':
-         #   modelo = autosklearn.classification.AutoSklearnClassifier(time_left_for_this_task=30)
+        elif res == 'auto':
+            modelo = autosklearn.classification.AutoSklearnClassifier(time_left_for_this_task=30)
 
 # automl.fit(X_train, y_train)
 # y_hat = automl.predict(X_test)
@@ -266,7 +250,6 @@ class MyVisitor(ParseTreeVisitor):
 
     def visitPrediccion(self, ctx: UNaIAParser.PrediccionContext):
         datos = self.tabla[str(ctx.ID(1))]
-        print("Buenas")
         predictions = self.tabla[str(ctx.ID(0))].predict(datos)
         print("Encontre ", sum(predictions), "valores de 1 y ", 100-sum(predictions), "valores de 0")
         #print(self.tabla[str(ctx.ID(0))])
@@ -312,20 +295,22 @@ class MyVisitor(ParseTreeVisitor):
         print("\nMatriz de confusion")
         print(cnf_matrix)
 
-        print('\nPrecision: {}'.format(metrics.precision_score(etiquetas, predictions)))
-        print('Recall: {}'.format(metrics.recall_score(etiquetas, predictions)))
-        print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas, predictions)))
+        print('\nPrecision: {}'.format(metrics.precision_score(etiquetas, predictions, average='micro')))
+        print('Recall: {}'.format(metrics.recall_score(etiquetas, predictions, average='micro')))
+        print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas, predictions, average='micro')))
 
         return self.visitChildren(ctx)
 
     # Visit a parse tree produced by UNaIAParser#graficas.
     def visitGraficas(self, ctx: UNaIAParser.GraficasContext):
-
         datos = self.tabla[str(ctx.ID(1))]
         caracteristicas = datos["caracteristicas"]
         etiquetas = datos["etiquetas"]
-
-        self.plot_decision_region(caracteristicas.values, self.gen_pred_fun(self.tabla[str(ctx.ID(0))]))
+        num = 100
+        if str(self.tabla[str(ctx.ID(0))])[0:4] == "Auto":
+            print("Usted Eligio un Modelo automático, su gráfica se puede demorar, espere por favor: ")
+            num = 10
+        self.plot_decision_region(caracteristicas.values, self.gen_pred_fun(self.tabla[str(ctx.ID(0))]), num)
         self.plot_data(caracteristicas.values, etiquetas.values)
         pl.show()
         return self.visitChildren(ctx)

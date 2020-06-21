@@ -4,17 +4,20 @@ Lenguaje de dominio específico para construir modelos de clasificación usando 
 TODO:
 
 Entre Todos
-1) Data Cleaning (Normalizacion, Estandarizacion ...)
-2) Rename Columns
-3) Comando Help
+
+0) Cambiar gramatica para que no parezca un lenguajes de programacion
+1) EXPORTAR EL CSV
+2) Data Cleaning (Normalizacion, Estandarizacion ...)
+3) Rename Columns
+4) Comando Help
 
 Brayan
-3) Show Graphics (confussion matrix, loss plot, boundary) [graficar(Clasificador, resultados)]
+6) Show Graphics (loss plot) 
 
 Juan
-4) AutoML
+7) Arreglar la salida de Auto
 
 Camilo
-5) Python Code Translate
-6) Errors
+8) Python Code Translate
+9) Errors
 
