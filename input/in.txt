@@ -1,20 +1,20 @@
-datosDeEjemplo = ejemplos("../datos/testLogistic.csv")
-#reporte(datosDeEjemplo, 10, 2)
-datosAPredecir = datos("../datos/testDatos.csv")
+datosDeEjemplo = ejemplos "../datos/testLogistic.csv"
+#reportar datosDeEjemplo (10, 2)
+datosAPredecir = datos "../datos/testDatos.csv"
 #miModelo = auto
 miModelo = arbolDeDecision
-datosEntrenamiento, datosPrueba = dividirDatos(datosDeEjemplo, 30)
-miModelo.entrenar(datosEntrenamiento)
-datosPredicciones = miModelo.predecir(datosAPredecir)
-efectividad = miModelo.evaluar(datosPrueba)
+datosEntrenamiento y datosPrueba = dividirDatos datosDeEjemplo:30
+entrenar miModelo con datosEntrenamiento
+datosPredicciones = predecir miModelo con datosAPredecir
+efectividad = evaluar miModelo con datosPrueba
 
-miModelo.estadisticas(datosDeEjemplo)
+estadisticas miModelo con datosDeEjemplo
 
-miModelo.graficar(datosDeEjemplo)
+graficar miModelo con datosDeEjemplo
 
 #MiModelo2 = auto
-#datos2Entrenamiento, datos2Prueba = dividirDatos(datosPredicciones, 20)
-#MiModelo2.entrenar(datos2Entrenamiento)
-#datos2Predicciones = MiModelo2.predecir(datosAPredecir)
-#efectividad2 = MiModelo2.evaluar(datosPrueba)
-#MiModelo2.estadisticas(datosDeEjemplo)
+#datos2Entrenamiento y datos2Prueba = dividirDatos datosPredicciones:20
+#entrenar MiModelo2 con datos2Entrenamiento
+#datos2Predicciones = predecir MiModelo2 con datosAPredecir
+#efectividad2 = evaluar MiModelo2 con datosPrueba
+#estadisticas MiModelo2 con datosDeEjemplo

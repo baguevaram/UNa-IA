@@ -5,17 +5,17 @@ grammar UNaIA;
 programa : (asignacion | metodo)*;
 
 //El archivo de datos a cargar debe ser un csv de la forma datos, Etiqueta
-datos: EJEMPLOS PAR_IZQ STRING (COMA STRING)? PAR_DER #DatosEjemplos
-       | DATOS PAR_IZQ STRING PAR_DER #DatosDatos;
+datos: EJEMPLOS STRING (COMA STRING)? #DatosEjemplos
+       | DATOS STRING #DatosDatos;
 
 
 asignacion : ID ASIG datos                 #AsigDatos
             |ID ASIG modelo                #AsigModelo
             |ID ASIG metodo                #AsigMetodo
-            |ID COMA ID ASIG division      #AsigMulti
+            |ID Y ID ASIG division      #AsigMulti
             ;
 
-division: DIVIDIRDATOS PAR_IZQ ID (COMA NUMERO)? PAR_DER;
+division: DIVIDIRDATOS ID (DOS_PUNTOS NUMERO)?;
 
 modelo: (REGRESIONLOGISTICA |
             BAYES|
@@ -27,17 +27,17 @@ modelo: (REGRESIONLOGISTICA |
 
 metodo: entrenamiento | evaluacion | prediccion | reporte | estadisticas | graficas;
 
-entrenamiento: ID PUNTO ENTRENAR PAR_IZQ ID PAR_DER ;
+entrenamiento: ENTRENAR ID CON ID;
 
-evaluacion: ID PUNTO EVALUAR PAR_IZQ ID PAR_DER;
+evaluacion: EVALUAR ID CON ID;
 
-prediccion: ID PUNTO PREDECIR PAR_IZQ ID PAR_DER;
+prediccion: PREDECIR ID CON ID;
 
-reporte: REPORTE PAR_IZQ ID (COMA NUMERO COMA NUMERO)? PAR_DER;
+reporte: REPORTAR ID PAR_IZQ (COMA NUMERO COMA NUMERO)? PAR_DER;
 
-estadisticas: ID PUNTO ESTADISTICAS PAR_IZQ ID PAR_DER;
+estadisticas: ESTADISTICAS ID CON ID;
 
-graficas: ID PUNTO GRAFICAR PAR_IZQ ID PAR_DER;
+graficas: GRAFICAR ID CON ID;
 // TOKENS
 
 COMMENT
@@ -61,6 +61,10 @@ PREDECIR: 'predecir';
 
 DIVIDIRDATOS: 'dividirDatos';
 
+CON: 'con';
+
+REPORTAR: 'reportar';
+
 REGRESIONLOGISTICA: 'regresionLogistica';
 
 BAYES: 'bayes' ;
@@ -79,6 +83,8 @@ AUTO: 'auto';
 
 COMA:',';
 
+DOS_PUNTOS: ':';
+
 PUNTO :'.';
 
 ASIG:'=';
@@ -87,7 +93,7 @@ PAR_IZQ: '(';
 
 PAR_DER: ')';
 
-REPORTE: 'reporte';
+Y: 'y';
 
 
 //-----------Tipos
