@@ -10,6 +10,11 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+import sklearn.model_selection
+import sklearn.datasets
+import numpy as np
+from sklearn.metrics import accuracy_score
+import autosklearn.classification
 
 import pandas as pd
 import csv
@@ -17,6 +22,16 @@ import os
 
 
 # This class defines a complete generic visitor for a parse tree produced by UNaIAParser.
+
+
+
+# X, y = sklearn.datasets.load_digits(return_X_y=True)
+# X_train, X_test, y_train, y_test = \
+#     sklearn.model_selection.train_test_split(X, y, random_state=1)
+# automl = autosklearn.classification.AutoSklearnClassifier()
+# automl.fit(X_train, y_train)
+# y_hat = automl.predict(X_test)
+# print("Accuracy score", accuracy_score(y_test, y_hat))
 
 class SemanticError(Exception):
 
@@ -46,7 +61,7 @@ class MyVisitor(ParseTreeVisitor):
 
     def visitAsigDatos(self, ctx: UNaIAParser.AsigDatosContext):
         res = self.visit(ctx.datos())
-        print("Voy a revisar los datos: ", res[0])
+        #print("Voy a revisar los datos: ", res[0])
         df = pd.read_csv(res[0])
         if len(res)>1:
             if res[1] != "None":
@@ -89,6 +104,12 @@ class MyVisitor(ParseTreeVisitor):
             modelo = DecisionTreeClassifier()
         elif res == 'bosqueAleatorio':
             modelo = RandomForestClassifier()
+        elif res == 'auto':
+            modelo = autosklearn.classification.AutoSklearnClassifier(time_left_for_this_task=30)
+
+# automl.fit(X_train, y_train)
+# y_hat = automl.predict(X_test)
+# print("Accuracy score", accuracy_score(y_test, y_hat))
 
         self.tabla[str(ctx.ID())] = modelo
 
@@ -165,7 +186,19 @@ class MyVisitor(ParseTreeVisitor):
         #print(caracteristicas)
         #print(etiquetas)
         self.tabla[str(ctx.ID(0))].fit(caracteristicas, etiquetas)
-        return self.visitChildren(ctx)
+        try:
+            print("CV_RESULTS: ")
+            # for i in ['mean_test_score', 'mean_fit_time', 'params', 'rank_test_scores']:
+            #     if type(self.tabla[str(ctx.ID(0))].cv_results_[i]) == np.ndarray:
+            #         lis = self.tabla[str(ctx.ID(0))].cv_results_[i]
+            #         print(i, sum(lis)/len(lis))
+            #     else:
+            #         print(i, self.tabla[str(ctx.ID(0))].cv_results_[i])
+            print("sprint_statistics: ", self.tabla[str(ctx.ID(0))].sprint_statistics())
+            # print("show_models: ", self.tabla[str(ctx.ID(0))].show_models())
+        except Exception:
+            pass
+        return "Terminado el Entrenamiento"
 
         # Visit a parse tree produced by UNaIAParser#evaluacion.
 
@@ -189,7 +222,7 @@ class MyVisitor(ParseTreeVisitor):
 
     def visitPrediccion(self, ctx: UNaIAParser.PrediccionContext):
         datos = self.tabla[str(ctx.ID(1))]
-        #print(datos)
+        print("Buenas")
         predictions = self.tabla[str(ctx.ID(0))].predict(datos)
         print("Encontre ", sum(predictions), "valores de 1 y ", 100-sum(predictions), "valores de 0")
         #print(self.tabla[str(ctx.ID(0))])
@@ -199,6 +232,27 @@ class MyVisitor(ParseTreeVisitor):
         }
         #print(datos.head())
         return pruebas_dict
+
+    # Visit a parse tree produced by UNaIAParser#reporte.
+    def visitReporte(self, ctx: UNaIAParser.ReporteContext):
+        rows = int(str(ctx.NUMERO(0))) if ctx.NUMERO(0) != None else None
+        cols = int(str(ctx.NUMERO(1))) if ctx.NUMERO(1) != None else None
+
+        datos = self.tabla[str(ctx.ID())]
+        with pd.option_context('display.max_rows', rows, 'display.max_columns', cols):
+            print("Las Caracteristicas del DataFrame son las siguientes: ")
+            print(datos["caracteristicas"])
+            print("\nSu Análisis Descriptivo es el siguiente: ")
+            print(datos["caracteristicas"].describe(include='all'))
+
+            print("\nLas Etiquetas del DataFrame son las siguientes: ")
+            print(datos["etiquetas"])
+            print("\nSu Análisis Descriptivo es el siguiente: ")
+            print(datos["etiquetas"].describe(include='all'))
+
+
+
+        return self.visitChildren(ctx)
 
 
 del UNaIAParser

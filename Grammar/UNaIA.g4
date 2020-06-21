@@ -22,9 +22,10 @@ modelo: (REGRESIONLOGISTICA |
             KNN|
             SVM|
             ARBOLDEDESICION|
-            BOSQUEALEATORIO);
+            BOSQUEALEATORIO|
+            AUTO);
 
-metodo: entrenamiento | evaluacion | prediccion;
+metodo: entrenamiento | evaluacion | prediccion | reporte;
 
 entrenamiento: ID PUNTO ENTRENAR PAR_IZQ ID PAR_DER ;
 
@@ -32,7 +33,7 @@ evaluacion: ID PUNTO EVALUAR PAR_IZQ ID PAR_DER;
 
 prediccion: ID PUNTO PREDECIR PAR_IZQ ID PAR_DER;
 
-
+reporte: REPORTE PAR_IZQ ID (COMA NUMERO COMA NUMERO)? PAR_DER;
 // TOKENS
 
 COMMENT
@@ -64,6 +65,8 @@ ARBOLDEDESICION: 'arbolDeDecision';
 
 BOSQUEALEATORIO: 'bosqueAleatorio';
 
+AUTO: 'auto';
+
 //------------Símbolos
 
 COMA:',';
@@ -75,6 +78,8 @@ ASIG:'=';
 PAR_IZQ: '(';
 
 PAR_DER: ')';
+
+REPORTE: 'reporte';
 
 
 //-----------Tipos

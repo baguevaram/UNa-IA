@@ -74,5 +74,10 @@ class UNaIAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by UNaIAParser#reporte.
+    def visitReporte(self, ctx:UNaIAParser.ReporteContext):
+        return self.visitChildren(ctx)
+
+
 
 del UNaIAParser

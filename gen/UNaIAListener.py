@@ -125,5 +125,14 @@ class UNaIAListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by UNaIAParser#reporte.
+    def enterReporte(self, ctx:UNaIAParser.ReporteContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#reporte.
+    def exitReporte(self, ctx:UNaIAParser.ReporteContext):
+        pass
+
+
 
 del UNaIAParser

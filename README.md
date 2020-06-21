@@ -12,7 +12,7 @@ Brayan
 3) Show Graphics (confussion matrix, loss plot, boundary) [graficar(Clasificador, resultados)]
 
 Juan
-4) AutoML, [report(df -> estadisticas descriptivas)]
+4) AutoML
 
 Camilo
 5) Python Code Translate
