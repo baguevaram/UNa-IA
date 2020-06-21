@@ -1,6 +1,8 @@
 # Generated from /home/brayan/Documentos/UNAL/Semestre 9/Lenguajes/TESTPYTHON/Grammar/UNaIA.g4 by ANTLR 4.8
 import sklearn
 from antlr4 import *
+from sklearn import metrics
+
 from UNaIAParser import UNaIAParser
 
 # Importacion de los modelos de clasificación de sklearn
@@ -13,8 +15,9 @@ from sklearn.model_selection import train_test_split
 import sklearn.model_selection
 import sklearn.datasets
 import numpy as np
-from sklearn.metrics import accuracy_score
-import autosklearn.classification
+import pylab as pl
+from sklearn.metrics import accuracy_score, confusion_matrix
+#import autosklearn.classification
 
 import pandas as pd
 import csv
@@ -43,6 +46,47 @@ class SemanticError(Exception):
 class MyVisitor(ParseTreeVisitor):
     # podemos hacer tablas aparte para los datos y los modelos, asi es mas facil identificar si existen los ids
     tabla = {}
+
+    # Función para visualizar un conjunto de datos en 2D
+    def plot_data(self,X, y):  # Función para graficar datos (X,y)
+        y_unique = np.unique(y)
+        colors = pl.cm.rainbow(np.linspace(0.0, 1.0, y_unique.size))
+        for this_y, color in zip(y_unique, colors):
+            this_X = X[y == this_y]
+            pl.scatter(this_X[:, 0], this_X[:, 1], c=np.array([color]),
+                       alpha=0.5, edgecolor='k',
+                       label="Class %s" % this_y)
+        pl.legend(loc="best")
+        pl.title("Data")
+
+    def gen_pred_fun(self,clf):
+        def pred_fun(x1, x2):
+            x = np.array([[x1, x2]])
+            return clf.predict(x)[0]
+        return pred_fun
+
+    # Función para visualizar de la superficie de decisión de un clasificador
+    def plot_decision_region(self,X, pred_fun):
+        min_x = np.min(X[:, 0])
+        max_x = np.max(X[:, 0])
+        min_y = np.min(X[:, 1])
+        max_y = np.max(X[:, 1])
+        min_x = min_x - (max_x - min_x) * 0.05
+        max_x = max_x + (max_x - min_x) * 0.05
+        min_y = min_y - (max_y - min_y) * 0.05
+        max_y = max_y + (max_y - min_y) * 0.05
+        x_vals = np.linspace(min_x, max_x, 100)
+        y_vals = np.linspace(min_y, max_y, 100)
+        XX, YY = np.meshgrid(x_vals, y_vals)
+        grid_r, grid_c = XX.shape
+        ZZ = np.zeros((grid_r, grid_c))
+        for i in range(grid_r):
+            for j in range(grid_c):
+                ZZ[i, j] = pred_fun(XX[i, j], YY[i, j])
+        pl.contourf(XX, YY, ZZ, 100, cmap=pl.cm.coolwarm, vmin=-1, vmax=2)
+        pl.colorbar()
+        pl.xlabel("x")
+        pl.ylabel("y")
 
     # TODO validar si el id existe en las asignaciones
 
@@ -104,8 +148,8 @@ class MyVisitor(ParseTreeVisitor):
             modelo = DecisionTreeClassifier()
         elif res == 'bosqueAleatorio':
             modelo = RandomForestClassifier()
-        elif res == 'auto':
-            modelo = autosklearn.classification.AutoSklearnClassifier(time_left_for_this_task=30)
+        #elif res == 'auto':
+         #   modelo = autosklearn.classification.AutoSklearnClassifier(time_left_for_this_task=30)
 
 # automl.fit(X_train, y_train)
 # y_hat = automl.predict(X_test)
@@ -254,5 +298,36 @@ class MyVisitor(ParseTreeVisitor):
 
         return self.visitChildren(ctx)
 
+    # Visit a parse tree produced by UNaIAParser#estadisticas.
+    def visitEstadisticas(self, ctx: UNaIAParser.EstadisticasContext):
+        datos = self.tabla[str(ctx.ID(1))]
+        # print(datos)
+        caracteristicas = datos["caracteristicas"]
+        etiquetas = datos["etiquetas"]
+
+        predictions = self.tabla[str(ctx.ID(0))].predict(caracteristicas)
+
+        cnf_matrix = confusion_matrix(etiquetas, predictions)
+
+        print("\nMatriz de confusion")
+        print(cnf_matrix)
+
+        print('\nPrecision: {}'.format(metrics.precision_score(etiquetas, predictions)))
+        print('Recall: {}'.format(metrics.recall_score(etiquetas, predictions)))
+        print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas, predictions)))
+
+        return self.visitChildren(ctx)
+
+    # Visit a parse tree produced by UNaIAParser#graficas.
+    def visitGraficas(self, ctx: UNaIAParser.GraficasContext):
+
+        datos = self.tabla[str(ctx.ID(1))]
+        caracteristicas = datos["caracteristicas"]
+        etiquetas = datos["etiquetas"]
+
+        self.plot_decision_region(caracteristicas.values, self.gen_pred_fun(self.tabla[str(ctx.ID(0))]))
+        self.plot_data(caracteristicas.values, etiquetas.values)
+        pl.show()
+        return self.visitChildren(ctx)
 
 del UNaIAParser

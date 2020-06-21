@@ -25,7 +25,7 @@ modelo: (REGRESIONLOGISTICA |
             BOSQUEALEATORIO|
             AUTO);
 
-metodo: entrenamiento | evaluacion | prediccion | reporte;
+metodo: entrenamiento | evaluacion | prediccion | reporte | estadisticas | graficas;
 
 entrenamiento: ID PUNTO ENTRENAR PAR_IZQ ID PAR_DER ;
 
@@ -34,6 +34,10 @@ evaluacion: ID PUNTO EVALUAR PAR_IZQ ID PAR_DER;
 prediccion: ID PUNTO PREDECIR PAR_IZQ ID PAR_DER;
 
 reporte: REPORTE PAR_IZQ ID (COMA NUMERO COMA NUMERO)? PAR_DER;
+
+estadisticas: ID PUNTO ESTADISTICAS PAR_IZQ ID PAR_DER;
+
+graficas: ID PUNTO GRAFICAR PAR_IZQ ID PAR_DER;
 // TOKENS
 
 COMMENT
@@ -44,6 +48,10 @@ COMMENT
 EJEMPLOS : 'ejemplos';
 
 DATOS : 'datos';
+
+ESTADISTICAS: 'estadisticas';
+
+GRAFICAR:'graficar';
 
 ENTRENAR: 'entrenar';
 
