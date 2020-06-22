@@ -1,4 +1,6 @@
 # Generated from /home/brayan/Documentos/UNAL/Semestre 9/Lenguajes/TESTPYTHON/Grammar/UNaIA.g4 by ANTLR 4.8
+from collections import Counter
+
 import sklearn
 from antlr4 import *
 from sklearn import metrics
@@ -23,8 +25,15 @@ from sklearn.model_selection import learning_curve
 
 import pandas as pd
 import csv
-import os
+import os, sys
 
+# Disable
+def blockPrint():
+    sys.stdout = open(os.devnull, 'w')
+
+# Restore
+def enablePrint():
+    sys.stdout = sys.__stdout__
 
 # This class defines a complete generic visitor for a parse tree produced by UNaIAParser.
 
@@ -51,8 +60,6 @@ class MyVisitor(ParseTreeVisitor):
         train_scores_std = np.std(train_scores, axis=1)
         test_scores_mean = np.mean(test_scores, axis=1)
         test_scores_std = np.std(test_scores, axis=1)
-        # fit_times_mean = np.mean(fit_times, axis=1)
-        # fit_times_std = np.std(fit_times, axis=1)
 
         # Plot learning curve
         axes.grid()
@@ -101,10 +108,12 @@ class MyVisitor(ParseTreeVisitor):
         XX, YY = np.meshgrid(x_vals, y_vals)
         grid_r, grid_c = XX.shape
         ZZ = np.zeros((grid_r, grid_c))
+        blockPrint()
         for i in range(grid_r):
             for j in range(grid_c):
-                ZZ[i, j] = pred_fun(XX[i, j], YY[i, j])
 
+                ZZ[i, j] = pred_fun(XX[i, j], YY[i, j])
+        enablePrint()
         pl.contourf(XX, YY, ZZ, 100, cmap=pl.cm.coolwarm, vmin=-1, vmax=2)
         pl.colorbar()
         pl.xlabel("x")
@@ -172,10 +181,6 @@ class MyVisitor(ParseTreeVisitor):
             modelo = RandomForestClassifier()
         elif res == 'auto':
             modelo = autosklearn.classification.AutoSklearnClassifier(time_left_for_this_task=30)
-
-# automl.fit(X_train, y_train)
-# y_hat = automl.predict(X_test)
-# print("Accuracy score", accuracy_score(y_test, y_hat))
 
         self.tabla[str(ctx.ID())] = modelo
 
@@ -245,23 +250,38 @@ class MyVisitor(ParseTreeVisitor):
         # Visit a parse tree produced by UNaIAParser#entrenamiento.
 
     def visitEntrenamiento(self, ctx: UNaIAParser.EntrenamientoContext):
-        #print(ctx.ID(1))
         datos = self.tabla[str(ctx.ID(1))]
         caracteristicas = datos["caracteristicas"]
         etiquetas = datos["etiquetas"]
-        #print(caracteristicas)
-        #print(etiquetas)
+        blockPrint()
         self.tabla[str(ctx.ID(0))].fit(caracteristicas, etiquetas)
+        enablePrint()
         try:
-            print("CV_RESULTS: ")
-            # for i in ['mean_test_score', 'mean_fit_time', 'params', 'rank_test_scores']:
-            #     if type(self.tabla[str(ctx.ID(0))].cv_results_[i]) == np.ndarray:
-            #         lis = self.tabla[str(ctx.ID(0))].cv_results_[i]
-            #         print(i, sum(lis)/len(lis))
-            #     else:
-            #         print(i, self.tabla[str(ctx.ID(0))].cv_results_[i])
-            print("sprint_statistics: ", self.tabla[str(ctx.ID(0))].sprint_statistics())
-            # print("show_models: ", self.tabla[str(ctx.ID(0))].show_models())
+            print("\n\n#####################################################")
+            print("Resultados de la Validación Cruzada para el Modelo", str(ctx.ID(0)), ":\n")
+            modl_name = Counter()
+            for i in ['mean_test_score', 'mean_fit_time', 'params']:
+                if type(self.tabla[str(ctx.ID(0))].cv_results_[i]) == np.ndarray:
+                    lis = self.tabla[str(ctx.ID(0))].cv_results_[i]
+                    print(i, sum(lis)/len(lis))
+                else:
+                    print("\nConteo de modelos entrenados y sus tipos: ")
+                    modl = self.tabla[str(ctx.ID(0))].cv_results_[i]
+                    for j in modl:
+                        # print(i)
+                        modl_name[j["classifier:__choice__"]] += 1
+
+
+            for i in modl_name:
+                print("Numero de", i, " entrenados:", modl_name[i])
+            print("#####################################################\n\n")
+            print("#####################################################")
+            print("Resultados de Auto Sklearn para el Modelo", str(ctx.ID(0)), ":\n")
+            lis = [i.replace("\n", "") for i in self.tabla[str(ctx.ID(0))].sprint_statistics().split("  ")]
+            print(lis[2])
+            print(lis[3])
+            print(lis[4])
+            print("#####################################################\n\n")
         except Exception:
             pass
         return "Terminado el Entrenamiento"
@@ -278,10 +298,9 @@ class MyVisitor(ParseTreeVisitor):
         #print(etiquetas)
 
         res = self.tabla[str(ctx.ID(0))].score(caracteristicas, etiquetas)
-
-        print("este es mi score")
-        print(res)
-
+        print("#####################################################")
+        print("Desempeño del modelo", str(ctx.ID(0)), ":", res)
+        print("#####################################################\n\n")
         return res
 
         # Visit a parse tree produced by UNaIAParser#prediccion.
@@ -289,7 +308,6 @@ class MyVisitor(ParseTreeVisitor):
     def visitPrediccion(self, ctx: UNaIAParser.PrediccionContext):
         datos = self.tabla[str(ctx.ID(1))]
         predictions = self.tabla[str(ctx.ID(0))].predict(datos)
-        print("Encontre ", sum(predictions), "valores de 1 y ", 100-sum(predictions), "valores de 0")
         #print(self.tabla[str(ctx.ID(0))])
         pruebas_dict = {
             "etiquetas": predictions,
@@ -305,18 +323,19 @@ class MyVisitor(ParseTreeVisitor):
 
         datos = self.tabla[str(ctx.ID())]
         with pd.option_context('display.max_rows', rows, 'display.max_columns', cols):
+            print("#####################################################")
             print("Las Caracteristicas del DataFrame son las siguientes: ")
             print(datos["caracteristicas"])
             print("\nSu Análisis Descriptivo es el siguiente: ")
             print(datos["caracteristicas"].describe(include='all'))
+            print("#####################################################\n\n")
 
+            print("#####################################################")
             print("\nLas Etiquetas del DataFrame son las siguientes: ")
             print(datos["etiquetas"])
             print("\nSu Análisis Descriptivo es el siguiente: ")
             print(datos["etiquetas"].describe(include='all'))
-
-
-
+            print("#####################################################\n\n")
         return self.visitChildren(ctx)
 
     # Visit a parse tree produced by UNaIAParser#estadisticas.
@@ -330,12 +349,18 @@ class MyVisitor(ParseTreeVisitor):
 
         cnf_matrix = confusion_matrix(etiquetas, predictions)
 
-        print("\nMatriz de confusion")
+        print("#####################################################")
+        print("Matriz de confusion del modelo", str(ctx.ID(0)), ":\n")
         print(cnf_matrix)
+        print("#####################################################\n\n")
 
-        print('\nPrecision: {}'.format(metrics.precision_score(etiquetas, predictions, average='micro')))
+        print("#####################################################")
+        print("Resultados del modelo", str(ctx.ID(0)), ":\n")
+        print('Precision: {}'.format(metrics.precision_score(etiquetas, predictions, average='micro')))
         print('Recall: {}'.format(metrics.recall_score(etiquetas, predictions, average='micro')))
         print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas, predictions, average='micro')))
+        print("#####################################################\n\n")
+
 
         return self.visitChildren(ctx)
 
@@ -353,9 +378,36 @@ class MyVisitor(ParseTreeVisitor):
         pl.show()
 
         if str(self.tabla[str(ctx.ID(0))])[0:4] != "Auto":
-            print("esta es mi curva de aprendizaje")
             self.plot_learning_curve(self.tabla[str(ctx.ID(0))], "Curva de aprendizaje", caracteristicas, etiquetas, axes=None, ylim=None, cv=None)
             plt.show()
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by UNaIAParser#exportacion.
+    def visitExportacion(self, ctx: UNaIAParser.ExportacionContext):
+
+        datos = self.tabla[str(ctx.ID())]
+
+        if type(datos) != pd.core.frame.DataFrame:
+            df = datos["caracteristicas"]
+            df["Etiquetas"] = datos["etiquetas"]
+        else:
+            df = datos
+
+        ruta = ""
+        nombre = str(ctx.ID()) + '.csv'
+
+        if ctx.EN() != None:
+            ruta += str(ctx.STRING(0)).replace('"',"") + '/'
+            if ctx.COMO() != None:
+                nombre = str(ctx.STRING(1)).replace('"', "") + ".csv"
+        elif ctx.COMO() != None :
+            nombre = str(ctx.STRING(0)).replace('"', "") + ".csv"
+
+        ruta += nombre
+
+        df.to_csv(ruta, index=False)
+
         return self.visitChildren(ctx)
 
 del UNaIAParser

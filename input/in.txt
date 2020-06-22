@@ -1,4 +1,4 @@
-datosDeEjemplo = ejemplos "../datos/testLogistic.csv"
+datosDeEjemplo = ejemplos "../datos/testLogistic.csv", "label"
 #reportar datosDeEjemplo (10, 2)
 datosAPredecir = datos "../datos/testDatos.csv"
 #miModelo = auto
@@ -11,6 +11,11 @@ efectividad = evaluar miModelo con datosPrueba
 estadisticas miModelo con datosDeEjemplo
 
 graficar miModelo con datosDeEjemplo
+
+exportar datosPredicciones en "../input" como "mis_etiquetas"
+exportar datosPredicciones como "mis_etiquetas2"
+exportar datosPredicciones en "../input"
+exportar datosAPredecir
 
 #MiModelo2 = auto
 #datos2Entrenamiento y datos2Prueba = dividirDatos datosPredicciones:20

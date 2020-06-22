@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore")
 from antlr4 import *
 from UNaIALexer import UNaIALexer
 from UNaIAParser import UNaIAParser

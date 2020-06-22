@@ -25,7 +25,7 @@ modelo: (REGRESIONLOGISTICA |
             BOSQUEALEATORIO|
             AUTO);
 
-metodo: entrenamiento | evaluacion | prediccion | reporte | estadisticas | graficas;
+metodo: entrenamiento | evaluacion | prediccion | reporte | estadisticas | graficas | exportacion;
 
 entrenamiento: ENTRENAR ID CON ID;
 
@@ -33,11 +33,13 @@ evaluacion: EVALUAR ID CON ID;
 
 prediccion: PREDECIR ID CON ID;
 
-reporte: REPORTAR ID PAR_IZQ (COMA NUMERO COMA NUMERO)? PAR_DER;
+reporte: REPORTAR ID PAR_IZQ (NUMERO COMA NUMERO)? PAR_DER;
 
 estadisticas: ESTADISTICAS ID CON ID;
 
 graficas: GRAFICAR ID CON ID;
+
+exportacion: EXPORTAR ID (EN STRING)? (COMO STRING)?;
 // TOKENS
 
 COMMENT
@@ -53,6 +55,8 @@ ESTADISTICAS: 'estadisticas';
 
 GRAFICAR:'graficar';
 
+EXPORTAR:'exportar';
+
 ENTRENAR: 'entrenar';
 
 EVALUAR: 'evaluar';
@@ -62,6 +66,12 @@ PREDECIR: 'predecir';
 DIVIDIRDATOS: 'dividirDatos';
 
 CON: 'con';
+
+Y: 'y';
+
+EN: 'en';
+
+COMO: 'como';
 
 REPORTAR: 'reportar';
 
@@ -85,16 +95,11 @@ COMA:',';
 
 DOS_PUNTOS: ':';
 
-PUNTO :'.';
-
 ASIG:'=';
 
 PAR_IZQ: '(';
 
 PAR_DER: ')';
-
-Y: 'y';
-
 
 //-----------Tipos
 
@@ -111,4 +116,3 @@ ESPACIO:   ( ' '
         | '\n'
         )+ -> channel(HIDDEN)
     ;
-

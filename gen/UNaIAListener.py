@@ -152,5 +152,14 @@ class UNaIAListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by UNaIAParser#exportacion.
+    def enterExportacion(self, ctx:UNaIAParser.ExportacionContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#exportacion.
+    def exitExportacion(self, ctx:UNaIAParser.ExportacionContext):
+        pass
+
+
 
 del UNaIAParser
