@@ -94,5 +94,20 @@ class UNaIAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by UNaIAParser#quantil.
+    def visitQuantil(self, ctx:UNaIAParser.QuantilContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by UNaIAParser#estandarizacion.
+    def visitEstandarizacion(self, ctx:UNaIAParser.EstandarizacionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by UNaIAParser#escaladominmax.
+    def visitEscaladominmax(self, ctx:UNaIAParser.EscaladominmaxContext):
+        return self.visitChildren(ctx)
+
+
 
 del UNaIAParser

@@ -21,11 +21,20 @@ modelo: (REGRESIONLOGISTICA |
             BAYES|
             KNN|
             SVM|
-            ARBOLDEDESICION|
+            ARBOLDEDECISION|
             BOSQUEALEATORIO|
             AUTO);
 
-metodo: entrenamiento | evaluacion | prediccion | reporte | estadisticas | graficas | exportacion;
+metodo: entrenamiento
+        | evaluacion
+        | prediccion
+        | reporte
+        | estadisticas
+        | graficas
+        | exportacion
+        | quantil
+        | estandarizacion
+        | escaladominmax;
 
 entrenamiento: ENTRENAR ID CON ID;
 
@@ -37,9 +46,16 @@ reporte: REPORTAR ID PAR_IZQ (NUMERO COMA NUMERO)? PAR_DER;
 
 estadisticas: ESTADISTICAS ID CON ID;
 
-graficas: GRAFICAR ID CON ID;
+graficas: GRAFICAR ID CON ID (EN STRING)? (COMO STRING (Y STRING)?)?;
 
 exportacion: EXPORTAR ID (EN STRING)? (COMO STRING)?;
+
+quantil: QUANTIL ID STRING;
+
+estandarizacion: ESTANDARIZAR ID STRING;
+
+escaladominmax: MINMAX ID STRING;
+
 // TOKENS
 
 COMMENT
@@ -75,6 +91,12 @@ COMO: 'como';
 
 REPORTAR: 'reportar';
 
+QUANTIL: 'quantil';
+
+ESTANDARIZAR: 'estandarizar';
+
+MINMAX: 'minmax';
+
 REGRESIONLOGISTICA: 'regresionLogistica';
 
 BAYES: 'bayes' ;
@@ -83,7 +105,7 @@ KNN: 'knn';
 
 SVM: 'svm';
 
-ARBOLDEDESICION: 'arbolDeDecision';
+ARBOLDEDECISION: 'arbolDeDecision';
 
 BOSQUEALEATORIO: 'bosqueAleatorio';
 

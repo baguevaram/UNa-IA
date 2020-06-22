@@ -161,5 +161,32 @@ class UNaIAListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by UNaIAParser#quantil.
+    def enterQuantil(self, ctx:UNaIAParser.QuantilContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#quantil.
+    def exitQuantil(self, ctx:UNaIAParser.QuantilContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#estandarizacion.
+    def enterEstandarizacion(self, ctx:UNaIAParser.EstandarizacionContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#estandarizacion.
+    def exitEstandarizacion(self, ctx:UNaIAParser.EstandarizacionContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#escaladominmax.
+    def enterEscaladominmax(self, ctx:UNaIAParser.EscaladominmaxContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#escaladominmax.
+    def exitEscaladominmax(self, ctx:UNaIAParser.EscaladominmaxContext):
+        pass
+
+
 
 del UNaIAParser

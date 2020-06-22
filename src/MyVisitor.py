@@ -1,31 +1,29 @@
 # Generated from /home/brayan/Documentos/UNAL/Semestre 9/Lenguajes/TESTPYTHON/Grammar/UNaIA.g4 by ANTLR 4.8
 from collections import Counter
-
-import sklearn
 from antlr4 import *
-from sklearn import metrics
-
 from UNaIAParser import UNaIAParser
 
 # Importacion de los modelos de clasificación de sklearn
-
+import sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import learning_curve
+from sklearn.metrics import accuracy_score, confusion_matrix
 import sklearn.model_selection
 import sklearn.datasets
+from sklearn import metrics
+from sklearn import preprocessing
+
 import numpy as np
 import pylab as pl
-from sklearn.metrics import accuracy_score, confusion_matrix
 import autosklearn.classification
 import matplotlib.pyplot as plt
-from sklearn.model_selection import learning_curve
-
 import pandas as pd
-import csv
 import os, sys
+import PIL
 
 # Disable
 def blockPrint():
@@ -375,10 +373,38 @@ class MyVisitor(ParseTreeVisitor):
             num = 10
         self.plot_decision_region(caracteristicas.values, self.gen_pred_fun(self.tabla[str(ctx.ID(0))]), num)
         self.plot_data(caracteristicas.values, etiquetas.values)
-        pl.show()
 
+        ruta = ""
+        nombre = "RegionDeDecision" + str(ctx.ID(0)) + '.jpg'
+
+        if ctx.EN() != None:
+            ruta += str(ctx.STRING(0)).replace('"', "") + '/'
+            if ctx.COMO() != None:
+                nombre = str(ctx.STRING(1)).replace('"', "") + ".jpg"
+        elif ctx.COMO() != None:
+            nombre = str(ctx.STRING(0)).replace('"', "") + ".jpg"
+
+        ruta += nombre
+        pl.title("Region de Decision de " + str(ctx.ID(0)))
+        pl.savefig(ruta, bbox_inches='tight')
+        pl.show()
         if str(self.tabla[str(ctx.ID(0))])[0:4] != "Auto":
-            self.plot_learning_curve(self.tabla[str(ctx.ID(0))], "Curva de aprendizaje", caracteristicas, etiquetas, axes=None, ylim=None, cv=None)
+            self.plot_learning_curve(self.tabla[str(ctx.ID(0))], "Curva de aprendizaje de " + str(ctx.ID(0)),
+                                     caracteristicas, etiquetas, axes=None, ylim=None, cv=None)
+
+            ruta = ""
+            nombre = "CurvaDeAprendizaje" + str(ctx.ID(0)) + '.jpg'
+
+            if ctx.EN() != None:
+                ruta += str(ctx.STRING(0)).replace('"', "") + '/'
+                if ctx.Y() != None:
+                    nombre = str(ctx.STRING(2)).replace('"', "") + ".jpg"
+            elif ctx.Y() != None:
+                nombre = str(ctx.STRING(1)).replace('"', "") + ".jpg"
+
+            ruta += nombre
+
+            plt.savefig(ruta, bbox_inches='tight')
             plt.show()
         return self.visitChildren(ctx)
 
@@ -410,4 +436,40 @@ class MyVisitor(ParseTreeVisitor):
 
         return self.visitChildren(ctx)
 
+    # Visit a parse tree produced by UNaIAParser#normalizacion.
+    def visitQuantil(self, ctx:UNaIAParser.QuantilContext):
+        datos = self.tabla[str(ctx.ID())]
+        datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = datos["caracteristicas"][
+            str(ctx.STRING()).replace("\"", "")].values.astype(float)
+        q_scale = preprocessing.QuantileTransformer()
+        col_scaled = q_scale.fit_transform(datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")].values.reshape(-1, 1))
+        datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = col_scaled
+        self.tabla[str(ctx.ID())] = datos
+
+        return "Ha sido Normalizado Correctamente"
+
+    # Visit a parse tree produced by UNaIAParser#estandarizacion.
+    def visitEstandarizacion(self, ctx:UNaIAParser.EstandarizacionContext):
+        datos = self.tabla[str(ctx.ID())]
+        datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = datos["caracteristicas"][
+            str(ctx.STRING()).replace("\"", "")].values.astype(float)
+        std_scaler = preprocessing.StandardScaler()
+        col_scaled = std_scaler.fit_transform(
+            datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")].values.reshape(-1, 1))
+        datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = col_scaled
+        self.tabla[str(ctx.ID())] = datos
+        return "Ha sido Estandarizado correctamente"
+
+
+    # Visit a parse tree produced by UNaIAParser#escaladominmax.
+    def visitEscaladominmax(self, ctx:UNaIAParser.EscaladominmaxContext):
+        datos = self.tabla[str(ctx.ID())]
+        datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = datos["caracteristicas"][
+            str(ctx.STRING()).replace("\"", "")].values.astype(float)
+        min_max_scaler = preprocessing.MinMaxScaler()
+        col_scaled = min_max_scaler.fit_transform(
+            datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")].values.reshape(-1, 1))
+        datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = col_scaled
+        self.tabla[str(ctx.ID())] = datos
+        return "Ha sido Escalado Correctamente"
 del UNaIAParser

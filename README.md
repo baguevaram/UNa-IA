@@ -4,18 +4,15 @@ Lenguaje de dominio específico para construir modelos de clasificación usando 
 TODO:
 
 Entre Todos
+    
+Camilo (Reunion con Laura Mañana Lunes)
+1) Python Code Translate
+2) Errors
+3) Comando Help
 
-1) EXPORTAR EL CSV
-2) Data Cleaning (Normalizacion, Estandarizacion ...)
-3) Rename Columns
-4) Comando Help
+Entrega:
 
-Brayan
-
-Juan
-7) Arreglar la salida de Auto
-
-Camilo
-8) Python Code Translate
-9) Errors
-
+Hacer despues de Revision con Laura
+- Ejemplos de Uso (Entrada y Salida)
+- README.txt: breve manual de compilación y uso
+- Exposición

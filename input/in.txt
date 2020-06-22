@@ -1,25 +1,17 @@
 datosDeEjemplo = ejemplos "../datos/testLogistic.csv", "label"
-#reportar datosDeEjemplo (10, 2)
+estandarizar datosDeEjemplo "x"
+estandarizar datosDeEjemplo "y"
 datosAPredecir = datos "../datos/testDatos.csv"
-#miModelo = auto
-miModelo = arbolDeDecision
+miModelo = auto
 datosEntrenamiento y datosPrueba = dividirDatos datosDeEjemplo:30
 entrenar miModelo con datosEntrenamiento
 datosPredicciones = predecir miModelo con datosAPredecir
 efectividad = evaluar miModelo con datosPrueba
-
 estadisticas miModelo con datosDeEjemplo
 
-graficar miModelo con datosDeEjemplo
-
-exportar datosPredicciones en "../input" como "mis_etiquetas"
-exportar datosPredicciones como "mis_etiquetas2"
-exportar datosPredicciones en "../input"
-exportar datosAPredecir
-
-#MiModelo2 = auto
-#datos2Entrenamiento y datos2Prueba = dividirDatos datosPredicciones:20
-#entrenar MiModelo2 con datos2Entrenamiento
-#datos2Predicciones = predecir MiModelo2 con datosAPredecir
-#efectividad2 = evaluar MiModelo2 con datosPrueba
-#estadisticas MiModelo2 con datosDeEjemplo
+graficar miModelo con datosDeEjemplo como "a1" y "a2"
+#graficar miModelo con datosDeEjemplo como "a1" y "a2"
+#graficar miModelo con datosDeEjemplo como "a3"
+#graficar miModelo con datosDeEjemplo en "../input"
+#graficar miModelo con datosDeEjemplo en "../input" como "a1" y "a2"
+#graficar miModelo con datosDeEjemplo en "../input" como "a3"
