@@ -2,7 +2,7 @@ grammar UNaIA;
 
 // REGLAS SINTACTICAS
 
-programa : (asignacion | metodo)*;
+programa : (asignacion | metodo)* (codigo_python)?;
 
 //El archivo de datos a cargar debe ser un csv de la forma datos, Etiqueta
 datos: EJEMPLOS STRING (COMA STRING)? #DatosEjemplos
@@ -55,6 +55,8 @@ quantil: QUANTIL ID STRING;
 estandarizacion: ESTANDARIZAR ID STRING;
 
 escaladominmax: MINMAX ID STRING;
+
+codigo_python: PYTHON;
 
 // TOKENS
 
@@ -110,6 +112,8 @@ ARBOLDEDECISION: 'arbolDeDecision';
 BOSQUEALEATORIO: 'bosqueAleatorio';
 
 AUTO: 'auto';
+
+PYTHON: 'python';
 
 //------------Símbolos
 

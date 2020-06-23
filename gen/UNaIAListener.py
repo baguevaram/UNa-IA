@@ -1,4 +1,4 @@
-# Generated from /home/minorin/Documents/UNa-IA/Grammar/UNaIA.g4 by ANTLR 4.8
+# Generated from /home/minorin/Documents/UnaIa/UNa-IA/Grammar/UNaIA.g4 by ANTLR 4.8
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .UNaIAParser import UNaIAParser
@@ -185,6 +185,15 @@ class UNaIAListener(ParseTreeListener):
 
     # Exit a parse tree produced by UNaIAParser#escaladominmax.
     def exitEscaladominmax(self, ctx:UNaIAParser.EscaladominmaxContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#codigo_python.
+    def enterCodigo_python(self, ctx:UNaIAParser.Codigo_pythonContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#codigo_python.
+    def exitCodigo_python(self, ctx:UNaIAParser.Codigo_pythonContext):
         pass
 
 
