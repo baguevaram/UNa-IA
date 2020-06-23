@@ -1,6 +1,7 @@
 datosDeEjemplo = ejemplos "../datos/testLogistic.csv", "label"
 estandarizar datosDeEjemplo "x"
 estandarizar datosDeEjemplo "y"
+reportar datosDeEjemplo (10, 2)
 datosAPredecir = datos "../datos/testDatos.csv"
 miModelo = arbolDeDecision
 datosEntrenamiento y datosPrueba = dividirDatos datosDeEjemplo:30
@@ -10,4 +11,5 @@ efectividad = evaluar miModelo con datosPrueba
 estadisticas miModelo con datosDeEjemplo
 
 graficar miModelo con datosDeEjemplo como "a1" y "a2"
+exportar datosPredicciones
 python

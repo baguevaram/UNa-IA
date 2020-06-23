@@ -91,19 +91,46 @@ def plot_decision_region(X, pred_fun, num):
     pl.ylabel("y")
 
 
+datosDeEjemplo = pd.read_csv("../datos/testLogistic.csv")
+etiquetas_datosDeEjemplo = datosDeEjemplo["label"]
+caracteristicas_datosDeEjemplo = datosDeEjemplo.drop("label", axis=1)
 
-datos_datosDeEjemplo['caracteristicas']["x"] = datos_datosDeEjemplo['caracteristicas']["x"].values.astype(float)
+caracteristicas_datosDeEjemplo["x"] = caracteristicas_datosDeEjemplo["x"].values.astype(float)
 std_scaler = preprocessing.StandardScaler()
-col_scaled = std_scaler.fit_transform(datos_datosDeEjemplo['caracteristicas']["x"].values.reshape(-1, 1))
-datos_datosDeEjemplo['caracteristicas']["x"] = col_scaled
+col_scaled = std_scaler.fit_transform(caracteristicas_datosDeEjemplo["x"].values.reshape(-1, 1))
+caracteristicas_datosDeEjemplo["x"] = col_scaled
 
-datos_datosDeEjemplo['caracteristicas']["y"] = datos_datosDeEjemplo['caracteristicas']["y"].values.astype(float)
+caracteristicas_datosDeEjemplo["y"] = caracteristicas_datosDeEjemplo["y"].values.astype(float)
 std_scaler = preprocessing.StandardScaler()
-col_scaled = std_scaler.fit_transform(datos_datosDeEjemplo['caracteristicas']["y"].values.reshape(-1, 1))
-datos_datosDeEjemplo['caracteristicas']["y"] = col_scaled
+col_scaled = std_scaler.fit_transform(caracteristicas_datosDeEjemplo["y"].values.reshape(-1, 1))
+caracteristicas_datosDeEjemplo["y"] = col_scaled
+with pd.option_context('display.max_rows', 10, 'display.max_columns', 2):
+    print("#####################################################")
+    print("Las Caracteristicas de la variable son las siguientes: ")
+    print(caracteristicas_datosDeEjemplo)
+    print("\nSu Análisis Descriptivo es el siguiente: ")
+    print(caracteristicas_datosDeEjemplo.describe(include="all"))
+    print("#####################################################\n\n")
 
-caracteristicas_datosDeEjemplo = datos_datosDeEjemplo['caracteristicas']
-etiquetas_datosDeEjemplo = datos_datosDeEjemplo['etiquetas']
+    print("#####################################################")
+    print("\nLas Etiquetas del DataFrame son las siguientes: ")
+    print(etiquetas_datosDeEjemplo)
+    print("\nSu Análisis Descriptivo es el siguiente: ")
+    print(etiquetas_datosDeEjemplo.describe(include="all"))
+    print("#####################################################\n\n")
+datosAPredecir = pd.read_csv("../datos/testDatos.csv", header=None)
+miModelo = DecisionTreeClassifier()
+caracteristicas_datosEntrenamiento, caracteristicas_datosPrueba, etiquetas_datosEntrenamiento, etiquetas_datosPrueba = train_test_split(caracteristicas_datosDeEjemplo, etiquetas_datosDeEjemplo, test_size=0.3)
+miModelo.fit(caracteristicas_datosEntrenamiento, etiquetas_datosEntrenamiento)
+
+print("\n\n#####################################################")
+print("Resultados de la Validación Cruzada para el Modelo miModelo :\n")
+datosPredicciones = datosAPredecir
+datosPredicciones['Etiquetas'] = miModelo.predict(datosAPredecir)
+desempeño_miModelo= miModelo.score(caracteristicas_datosPrueba, etiquetas_datosPrueba)
+print("#####################################################")
+print("Desempeño del modelo miModelo :", desempeño_miModelo)
+print("#####################################################\n\n")
 predictions_miModelo= miModelo.predict(caracteristicas_datosDeEjemplo)
 
 cnf_matrix_miModelo= confusion_matrix(etiquetas_datosDeEjemplo, predictions_miModelo)
@@ -118,9 +145,6 @@ print('Precision: {}'.format(metrics.precision_score(etiquetas_datosDeEjemplo, p
 print('Recall: {}'.format(metrics.recall_score(etiquetas_datosDeEjemplo, predictions_miModelo, average='micro')))
 print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas_datosDeEjemplo, predictions_miModelo, average='micro')))
 print('#####################################################\n\n')
-
-caracteristicas_datosDeEjemplo = datos_datosDeEjemplo['caracteristicas']
-etiquetas_datosDeEjemplo = datos_datosDeEjemplo['etiquetas']
 plot_decision_region(caracteristicas_datosDeEjemplo.values, gen_pred_fun(miModelo), 100)
 plot_data(caracteristicas_datosDeEjemplo.values, etiquetas_datosDeEjemplo.values)
 pl.title("Region de Decision de miModelo")
@@ -130,3 +154,5 @@ pl.show()
 plot_learning_curve(miModelo, "Curva de aprendizaje de miModelo", caracteristicas_datosDeEjemplo, etiquetas_datosDeEjemplo, axes=None, ylim=None, cv=None)
 plt.savefig('a2.jpg', bbox_inches='tight')
 plt.show()
+df_datosPredicciones = datosPredicciones
+df_datosPredicciones.to_csv('datosPredicciones.csv', index=False)
