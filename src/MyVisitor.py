@@ -26,117 +26,118 @@ import os, sys
 import PIL
 import re
 
+
 # Disable
 def blockPrint():
     sys.stdout = open(os.devnull, 'w')
+
 
 # Restore
 def enablePrint():
     sys.stdout = sys.__stdout__
 
-# Plantilla
-########################################################################################
 
-plantilla = "import sklearn\n" \
-                  "from sklearn.linear_model import LogisticRegression\n" \
-                  "from sklearn.neighbors import KNeighborsClassifier\n" \
-                  "from sklearn.tree import DecisionTreeClassifier\n" \
-                  "from sklearn.ensemble import RandomForestClassifier\n" \
-                  "from sklearn.model_selection import train_test_split\n" \
-                  "from sklearn.model_selection import learning_curve\n" \
-                  "from sklearn.metrics import accuracy_score, confusion_matrix\n" \
-                  "import sklearn.model_selection\n" \
-                  "import sklearn.datasets\n" \
-                  "from sklearn import metrics\n" \
-                  "from sklearn import preprocessing\n" \
-                  "from collections import Counter\n" \
-                  "import numpy as np\n" \
-                  "import pylab as pl\n" \
-                  "import autosklearn.classification\n" \
-                  "import matplotlib.pyplot as plt\n" \
-                  "import pandas as pd\n" \
-                  "import os, sys\n" \
-                  "import PIL\n" \
-          "\ndef plot_learning_curve(estimator, title, X, y, axes=None, ylim=None, cv=None,\n" \
-                          "                         n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):\n" \
-                          "    if axes is None:\n" \
-                          "        _, axes = plt.subplots(1, 1)\n" \
-                          "    axes.set_title(title)\n" \
-                          "    if ylim is not None:\n" \
-                          "        axes.set_ylim(*ylim)\n" \
-                          "    axes.set_xlabel(\"Ejemplos de Entrenamiento\")\n" \
-                          "    axes.set_ylabel(\"Puntaje\")\n" \
-                          "    train_sizes, train_scores, test_scores, fit_times, _ = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs,\n" \
-                          "                       train_sizes=train_sizes,\n" \
-                          "                       return_times=True)\n" \
-                          "    train_scores_mean = np.mean(train_scores, axis=1)\n" \
-                          "    train_scores_std = np.std(train_scores, axis=1)\n" \
-                          "    test_scores_mean = np.mean(test_scores, axis=1)\n" \
-                          "    test_scores_std = np.std(test_scores, axis=1)\n" \
-                          "    # Plot learning curve\n" \
-                          "    axes.grid()\n" \
-                          "    axes.fill_between(train_sizes, train_scores_mean - train_scores_std,\n" \
-                          "                      train_scores_mean + train_scores_std, alpha=0.1,\n" \
-                          "                      color=\"r\")\n" \
-                          "    axes.fill_between(train_sizes, test_scores_mean - test_scores_std,\n" \
-                          "                      test_scores_mean + test_scores_std, alpha=0.1,\n" \
-                          "                      color=\"g\")\n" \
-                          "    axes.plot(train_sizes, train_scores_mean, 'o-', color=\"r\",\n" \
-                          "              label=\"Puntaje de entrenamiento\")\n" \
-                          "    axes.plot(train_sizes, test_scores_mean, 'o-', color=\"g\",\n" \
-                          "               label=\"Puntaje de validación cruzada\")\n" \
-                          "    axes.legend(loc=\"best\")\n" \
-                    "\n# Función para visualizar un conjunto de datos en 2D\n" \
-                    "def plot_data(self, X, y):  # Función para graficar datos (X,y)\n" \
-                    "   y_unique = np.unique(y)\n" \
-                    "   colors = pl.cm.rainbow(np.linspace(0.0, 1.0, y_unique.size))\n" \
-                    "   for this_y, color in zip(y_unique, colors):\n" \
-                    "       this_X = X[y == this_y]\n" \
-                    "       pl.scatter(this_X[:, 0], this_X[:, 1], c=np.array([color]),\n" \
-                    "       alpha=0.5, edgecolor='k',\n" \
-                    "       label=\"Class %s\" % this_y)\n" \
-                    "       pl.legend(loc=\"best\")\n" \
-                    "       pl.title(\"Data\")\n" \
-                   "\ndef gen_pred_fun(self, clf):\n" \
-                       "    def pred_fun(x1, x2):\n" \
-                       "        x = np.array([[x1, x2]])\n" \
-                       "        return clf.predict(x)[0]\n" \
-                       "    return pred_fun\n" \
-                   "\ndef plot_decision_region(self, X, pred_fun):\n" \
-                               "    min_x = np.min(X[:, 0])\n" \
-                               "    max_x = np.max(X[:, 0])\n" \
-                               "    min_y = np.min(X[:, 1])\n" \
-                               "    max_y = np.max(X[:, 1])\n" \
-                               "    min_x = min_x - (max_x - min_x) * 0.05\n" \
-                               "    max_x = max_x + (max_x - min_x) * 0.05\n" \
-                               "    min_y = min_y - (max_y - min_y) * 0.05\n" \
-                               "    max_y = max_y + (max_y - min_y) * 0.05\n" \
-                               "    x_vals = np.linspace(min_x, max_x, 100)\n" \
-                               "    y_vals = np.linspace(min_y, max_y, 100)\n" \
-                               "    XX, YY = np.meshgrid(x_vals, y_vals)\n" \
-                               "    grid_r, grid_c = XX.shape\n" \
-                               "    ZZ = np.zeros((grid_r, grid_c))\n" \
-                               "    for i in range(grid_r):\n" \
-                               "        for j in range(grid_c):\n" \
-                               "            ZZ[i, j] = pred_fun(XX[i, j], YY[i, j])\n" \
-                               "    pl.contourf(XX, YY, ZZ, 100, cmap=pl.cm.coolwarm, vmin=-1, vmax=2)\n" \
-                               "    pl.colorbar()\n" \
-                               "    pl.xlabel(\"x\")\n" \
-                               "    pl.ylabel(\"y\")\n\n\n"
-
-
-########################################################################################
 # This class defines a complete generic visitor for a parse tree produced by UNaIAParser.
 
 class MyVisitor(ParseTreeVisitor):
+    # Plantilla
+    ########################################################################################
+
+    plantilla = "import sklearn\n" \
+                "from sklearn.linear_model import LogisticRegression\n" \
+                "from sklearn.neighbors import KNeighborsClassifier\n" \
+                "from sklearn.tree import DecisionTreeClassifier\n" \
+                "from sklearn.ensemble import RandomForestClassifier\n" \
+                "from sklearn.model_selection import train_test_split\n" \
+                "from sklearn.model_selection import learning_curve\n" \
+                "from sklearn.metrics import accuracy_score, confusion_matrix\n" \
+                "import sklearn.model_selection\n" \
+                "import sklearn.datasets\n" \
+                "from sklearn import metrics\n" \
+                "from sklearn import preprocessing\n" \
+                "from collections import Counter\n" \
+                "import numpy as np\n" \
+                "import pylab as pl\n" \
+                "import autosklearn.classification\n" \
+                "import matplotlib.pyplot as plt\n" \
+                "import pandas as pd\n" \
+                "import os, sys\n" \
+                "import PIL\n\n" \
+                "\ndef plot_learning_curve(estimator, title, X, y, axes=None, ylim=None, cv=None,\n" \
+                "                         n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):\n" \
+                "    if axes is None:\n" \
+                "        _, axes = plt.subplots(1, 1)\n" \
+                "    axes.set_title(title)\n" \
+                "    if ylim is not None:\n" \
+                "        axes.set_ylim(*ylim)\n" \
+                "    axes.set_xlabel(\"Ejemplos de Entrenamiento\")\n" \
+                "    axes.set_ylabel(\"Puntaje\")\n" \
+                "    train_sizes, train_scores, test_scores, fit_times, _ = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs,\n" \
+                "                       train_sizes=train_sizes,\n" \
+                "                       return_times=True)\n" \
+                "    train_scores_mean = np.mean(train_scores, axis=1)\n" \
+                "    train_scores_std = np.std(train_scores, axis=1)\n" \
+                "    test_scores_mean = np.mean(test_scores, axis=1)\n" \
+                "    test_scores_std = np.std(test_scores, axis=1)\n" \
+                "    # Plot learning curve\n" \
+                "    axes.grid()\n" \
+                "    axes.fill_between(train_sizes, train_scores_mean - train_scores_std,\n" \
+                "                      train_scores_mean + train_scores_std, alpha=0.1,\n" \
+                "                      color=\"r\")\n" \
+                "    axes.fill_between(train_sizes, test_scores_mean - test_scores_std,\n" \
+                "                      test_scores_mean + test_scores_std, alpha=0.1,\n" \
+                "                      color=\"g\")\n" \
+                "    axes.plot(train_sizes, train_scores_mean, 'o-', color=\"r\",\n" \
+                "              label=\"Puntaje de entrenamiento\")\n" \
+                "    axes.plot(train_sizes, test_scores_mean, 'o-', color=\"g\",\n" \
+                "               label=\"Puntaje de validación cruzada\")\n" \
+                "    axes.legend(loc=\"best\")\n" \
+                "\n# Función para visualizar un conjunto de datos en 2D\n" \
+                "def plot_data(X, y):  # Función para graficar datos (X,y)\n" \
+                "   y_unique = np.unique(y)\n" \
+                "   colors = pl.cm.rainbow(np.linspace(0.0, 1.0, y_unique.size))\n" \
+                "   for this_y, color in zip(y_unique, colors):\n" \
+                "       this_X = X[y == this_y]\n" \
+                "       pl.scatter(this_X[:, 0], this_X[:, 1], c=np.array([color]),\n" \
+                "       alpha=0.5, edgecolor='k',\n" \
+                "       label=\"Class %s\" % this_y)\n" \
+                "       pl.legend(loc=\"best\")\n" \
+                "       pl.title(\"Data\")\n" \
+                "\ndef gen_pred_fun(clf):\n" \
+                "    def pred_fun(x1, x2):\n" \
+                "        x = np.array([[x1, x2]])\n" \
+                "        return clf.predict(x)[0]\n" \
+                "    return pred_fun\n" \
+                "\ndef plot_decision_region(X, pred_fun, num):\n" \
+                "    min_x = np.min(X[:, 0])\n" \
+                "    max_x = np.max(X[:, 0])\n" \
+                "    min_y = np.min(X[:, 1])\n" \
+                "    max_y = np.max(X[:, 1])\n" \
+                "    min_x = min_x - (max_x - min_x) * 0.05\n" \
+                "    max_x = max_x + (max_x - min_x) * 0.05\n" \
+                "    min_y = min_y - (max_y - min_y) * 0.05\n" \
+                "    max_y = max_y + (max_y - min_y) * 0.05\n" \
+                "    x_vals = np.linspace(min_x, max_x, num)\n" \
+                "    y_vals = np.linspace(min_y, max_y, num)\n" \
+                "    XX, YY = np.meshgrid(x_vals, y_vals)\n" \
+                "    grid_r, grid_c = XX.shape\n" \
+                "    ZZ = np.zeros((grid_r, grid_c))\n" \
+                "    for i in range(grid_r):\n" \
+                "        for j in range(grid_c):\n" \
+                "            ZZ[i, j] = pred_fun(XX[i, j], YY[i, j])\n" \
+                "    pl.contourf(XX, YY, ZZ, 100, cmap=pl.cm.coolwarm, vmin=-1, vmax=2)\n" \
+                "    pl.colorbar()\n" \
+                "    pl.xlabel(\"x\")\n" \
+                "    pl.ylabel(\"y\")\n\n\n"
+
+    ########################################################################################
 
     tabla = {}
 
     # Visit a parse tree produced by UNaIAParser#codigo_python.
-    def visitCodigo_python(self, ctx:UNaIAParser.Codigo_pythonContext):
+    def visitCodigo_python(self, ctx: UNaIAParser.Codigo_pythonContext):
         self.exportar()
         return self.visitChildren(ctx)
-
 
     def exportar(self):
         output_path = "../output/UNaIAModel.py"
@@ -144,8 +145,7 @@ class MyVisitor(ParseTreeVisitor):
             os.remove(output_path)
 
         with open(output_path, "a") as file:
-            file.write(plantilla)
-
+            file.write(self.plantilla)
 
     def get_error(self, error):
         reverse = error[::-1]
@@ -166,10 +166,8 @@ class MyVisitor(ParseTreeVisitor):
         translation = translator.translate(error_str, src='en', dest='es')
         return translation.text
 
-
     def print_error(self, error):
         return self.get_error_translation(self.get_error(str(error)))
-
 
     def plot_learning_curve(self, estimator, title, X, y, axes=None, ylim=None, cv=None,
                             n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
@@ -194,21 +192,19 @@ class MyVisitor(ParseTreeVisitor):
         # Plot learning curve
         axes.grid()
         axes.fill_between(train_sizes, train_scores_mean - train_scores_std,
-                             train_scores_mean + train_scores_std, alpha=0.1,
-                             color="r")
+                          train_scores_mean + train_scores_std, alpha=0.1,
+                          color="r")
         axes.fill_between(train_sizes, test_scores_mean - test_scores_std,
-                             test_scores_mean + test_scores_std, alpha=0.1,
-                             color="g")
+                          test_scores_mean + test_scores_std, alpha=0.1,
+                          color="g")
         axes.plot(train_sizes, train_scores_mean, 'o-', color="r",
-                     label="Puntaje de entrenamiento")
+                  label="Puntaje de entrenamiento")
         axes.plot(train_sizes, test_scores_mean, 'o-', color="g",
-                     label="Puntaje de validación cruzada")
+                  label="Puntaje de validación cruzada")
         axes.legend(loc="best")
 
-
-
     # Función para visualizar un conjunto de datos en 2D
-    def plot_data(self,X, y):  # Función para graficar datos (X,y)
+    def plot_data(self, X, y):  # Función para graficar datos (X,y)
         y_unique = np.unique(y)
         colors = pl.cm.rainbow(np.linspace(0.0, 1.0, y_unique.size))
         for this_y, color in zip(y_unique, colors):
@@ -219,14 +215,15 @@ class MyVisitor(ParseTreeVisitor):
         pl.legend(loc="best")
         pl.title("Data")
 
-    def gen_pred_fun(self,clf):
+    def gen_pred_fun(self, clf):
         def pred_fun(x1, x2):
             x = np.array([[x1, x2]])
             return clf.predict(x)[0]
+
         return pred_fun
 
     # Función para visualizar de la superficie de decisión de un clasificador
-    def plot_decision_region(self,X, pred_fun, num):
+    def plot_decision_region(self, X, pred_fun, num):
         min_x = np.min(X[:, 0])
         max_x = np.max(X[:, 0])
         min_y = np.min(X[:, 1])
@@ -243,7 +240,6 @@ class MyVisitor(ParseTreeVisitor):
         blockPrint()
         for i in range(grid_r):
             for j in range(grid_c):
-
                 ZZ[i, j] = pred_fun(XX[i, j], YY[i, j])
         enablePrint()
         pl.contourf(XX, YY, ZZ, 100, cmap=pl.cm.coolwarm, vmin=-1, vmax=2)
@@ -258,18 +254,18 @@ class MyVisitor(ParseTreeVisitor):
 
         # Visit a parse tree produced by UNaIAParser#datos.
 
-    def visitDatosEjemplos(self, ctx:UNaIAParser.DatosEjemplosContext):
+    def visitDatosEjemplos(self, ctx: UNaIAParser.DatosEjemplosContext):
         valor = str(ctx.STRING(1)).replace("\"", "")
         return (str(ctx.STRING(0)).replace('"', ""), valor)
 
-    def visitDatosDatos(self, ctx:UNaIAParser.DatosDatosContext):
+    def visitDatosDatos(self, ctx: UNaIAParser.DatosDatosContext):
         return [str(ctx.STRING()).replace('"', "")]
         # Visit a parse tree produced by UNaIAParser#AsigDatos.
 
     def visitAsigDatos(self, ctx: UNaIAParser.AsigDatosContext):
         instruction = ''
         res = self.visit(ctx.datos())
-        #print("Voy a revisar los datos: ", res[0])
+        # print("Voy a revisar los datos: ", res[0])
         df = pd.read_csv(res[0])
         instruction_df = "df = pd.read_csv(" + str(res[0]) + ")\n"
         if len(res) > 1:
@@ -330,9 +326,9 @@ class MyVisitor(ParseTreeVisitor):
     def visitAsigMetodo(self, ctx: UNaIAParser.AsigMetodoContext):
 
         res = self.visit(ctx.metodo())
-        #print("Agrego a la tabla", ctx.ID(), "contienen", res)
+        # print("Agrego a la tabla", ctx.ID(), "contienen", res)
         self.tabla[str(ctx.ID())] = res
-        #print(self.tabla)
+        # print(self.tabla)
         return "salí de visitAsigMetodo"
 
         # Visit a parse tree produced by UNaIAParser#AsigMulti.
@@ -352,7 +348,7 @@ class MyVisitor(ParseTreeVisitor):
 
         self.tabla[str(ctx.ID(0))] = entrenamiento_dict
         self.tabla[str(ctx.ID(1))] = pruebas_dict
-        #print(len(entrenamiento_dict["etiquetas"]), len(pruebas_dict["etiquetas"]))
+        # print(len(entrenamiento_dict["etiquetas"]), len(pruebas_dict["etiquetas"]))
         return "Sali de AsigMulti"
 
         # Visit a parse tree produced by UNaIAParser#division.
@@ -360,7 +356,7 @@ class MyVisitor(ParseTreeVisitor):
     def visitDivision(self, ctx: UNaIAParser.DivisionContext):
         # Se deberia verificar que no de menos o mas de uno
         if ctx.NUMERO() == None:
-            porcentaje= 70
+            porcentaje = 70
         else:
             porcentaje = int(str(ctx.NUMERO()))
 
@@ -371,7 +367,7 @@ class MyVisitor(ParseTreeVisitor):
         else:
             datos = self.tabla[str(ctx.ID())]
             X_train, X_test, y_train, y_test = train_test_split(
-                datos["caracteristicas"], datos["etiquetas"], test_size=int(str(ctx.NUMERO()))/100)
+                datos["caracteristicas"], datos["etiquetas"], test_size=int(str(ctx.NUMERO())) / 100)
 
         return (X_train, y_train), (X_test, y_test)
 
@@ -402,14 +398,13 @@ class MyVisitor(ParseTreeVisitor):
             for i in ['mean_test_score', 'mean_fit_time', 'params']:
                 if type(self.tabla[str(ctx.ID(0))].cv_results_[i]) == np.ndarray:
                     lis = self.tabla[str(ctx.ID(0))].cv_results_[i]
-                    print(i, sum(lis)/len(lis))
+                    print(i, sum(lis) / len(lis))
                 else:
                     print("\nConteo de modelos entrenados y sus tipos: ")
                     modl = self.tabla[str(ctx.ID(0))].cv_results_[i]
                     for j in modl:
                         # print(i)
                         modl_name[j["classifier:__choice__"]] += 1
-
 
             for i in modl_name:
                 print("Numero de", i, " entrenados:", modl_name[i])
@@ -433,8 +428,8 @@ class MyVisitor(ParseTreeVisitor):
         caracteristicas = datos["caracteristicas"]
         etiquetas = datos["etiquetas"]
 
-        #print(caracteristicas)
-        #print(etiquetas)
+        # print(caracteristicas)
+        # print(etiquetas)
 
         res = self.tabla[str(ctx.ID(0))].score(caracteristicas, etiquetas)
         print("#####################################################")
@@ -447,12 +442,12 @@ class MyVisitor(ParseTreeVisitor):
     def visitPrediccion(self, ctx: UNaIAParser.PrediccionContext):
         datos = self.tabla[str(ctx.ID(1))]
         predictions = self.tabla[str(ctx.ID(0))].predict(datos)
-        #print(self.tabla[str(ctx.ID(0))])
+        # print(self.tabla[str(ctx.ID(0))])
         pruebas_dict = {
             "etiquetas": predictions,
             "caracteristicas": datos
         }
-        #print(datos.head())
+        # print(datos.head())
         return pruebas_dict
 
     # Visit a parse tree produced by UNaIAParser#reporte.
@@ -480,11 +475,14 @@ class MyVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by UNaIAParser#estadisticas.
     def visitEstadisticas(self, ctx: UNaIAParser.EstadisticasContext):
         datos = self.tabla[str(ctx.ID(1))]
-        # print(datos)
+
         caracteristicas = datos["caracteristicas"]
         etiquetas = datos["etiquetas"]
-
         predictions = self.tabla[str(ctx.ID(0))].predict(caracteristicas)
+
+        self.plantilla += "\ncaracteristicas_" + str(ctx.ID(1)) + " = datos_" + str(ctx.ID(1)) + "['caracteristicas']\n" \
+                          "etiquetas_" + str(ctx.ID(1)) + " = datos_" + str(ctx.ID(1)) + "['etiquetas']\n" \
+                          "predictions_" + str(ctx.ID(0)) + "= " + str(ctx.ID(0)) + ".predict(caracteristicas_" + str(ctx.ID(1)) + ")\n"
 
         cnf_matrix = confusion_matrix(etiquetas, predictions)
 
@@ -500,20 +498,39 @@ class MyVisitor(ParseTreeVisitor):
         print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas, predictions, average='micro')))
         print("#####################################################\n\n")
 
+        self.plantilla += "\ncnf_matrix_" + str(ctx.ID(0)) + "= confusion_matrix(etiquetas_" + str(ctx.ID(1)) + ", predictions_" + str(ctx.ID(0)) + ")\n" \
+                           "print('#####################################################\\n')\n" \
+                           "print('Matriz de confusion del modelo, " + str(ctx.ID(0)) + ":\\n')\n" \
+                           "print(cnf_matrix_" + str(ctx.ID(0)) + ")\n" \
+                           "print('#####################################################\\n\\n')\n\n"\
+                           "print('#####################################################\\n')\n"\
+                           "print('Resultados del modelo " + str(ctx.ID(0)) + ":\\n')\n" \
+                           "print('Precision: {}'.format(metrics.precision_score(etiquetas_" + str(ctx.ID(1)) + ", predictions_" + str(ctx.ID(0)) + ", average='micro')))\n" \
+                           "print('Recall: {}'.format(metrics.recall_score(etiquetas_" + str(ctx.ID(1)) + ", predictions_" + str(ctx.ID(0)) + ", average='micro')))\n" \
+                           "print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas_" + str(ctx.ID(1)) + ", predictions_" + str(ctx.ID(0)) + ", average='micro')))\n" \
+                           "print('#####################################################\\n\\n')\n"
+
 
         return self.visitChildren(ctx)
 
     # Visit a parse tree produced by UNaIAParser#graficas.
     def visitGraficas(self, ctx: UNaIAParser.GraficasContext):
         datos = self.tabla[str(ctx.ID(1))]
+        #self.plantillas += "datos_" + str(ctx.ID())
         caracteristicas = datos["caracteristicas"]
         etiquetas = datos["etiquetas"]
+        self.plantilla += "\ncaracteristicas_" + str(ctx.ID(1)) + " = datos_" + str(ctx.ID(1)) + "['caracteristicas']\n" \
+                           "etiquetas_" + str(ctx.ID(1)) + " = datos_" + str(ctx.ID(1)) + "['etiquetas']\n"
         num = 100
         if str(self.tabla[str(ctx.ID(0))])[0:4] == "Auto":
             print("Usted Eligio un Modelo automático, su gráfica se puede demorar, espere por favor: ")
+            self.plantilla += "print('Usted Eligio un Modelo automático, su gráfica se puede demorar, espere por favor: ')\n"
             num = 10
         self.plot_decision_region(caracteristicas.values, self.gen_pred_fun(self.tabla[str(ctx.ID(0))]), num)
+        self.plantilla += "plot_decision_region(caracteristicas_" + str(ctx.ID(1)) + ".values, " + "gen_pred_fun(" + str(ctx.ID(0)) + "), " + str(num) + ")\n"
         self.plot_data(caracteristicas.values, etiquetas.values)
+        self.plantilla += "plot_data(caracteristicas_" + str(ctx.ID(1)) + ".values, " + "etiquetas_" + \
+                           str(ctx.ID(1)) + ".values)\n"
 
         ruta = ""
         nombre = "RegionDeDecision" + str(ctx.ID(0)) + '.jpg'
@@ -526,12 +543,18 @@ class MyVisitor(ParseTreeVisitor):
             nombre = str(ctx.STRING(0)).replace('"', "") + ".jpg"
 
         ruta += nombre
-        pl.title("Region de Decision de " + str(ctx.ID(0)))
+        pl.title("Region de Decision de ," + str(ctx.ID(0)))
         pl.savefig(ruta, bbox_inches='tight')
         pl.show()
+        self.plantilla += 'pl.title("Region de Decision de ' + str(ctx.ID(0)) + '")\n' \
+                           "pl.savefig('" + ruta + "', bbox_inches='tight')\n" \
+                           "pl.show()\n\n"
         if str(self.tabla[str(ctx.ID(0))])[0:4] != "Auto":
             self.plot_learning_curve(self.tabla[str(ctx.ID(0))], "Curva de aprendizaje de " + str(ctx.ID(0)),
                                      caracteristicas, etiquetas, axes=None, ylim=None, cv=None)
+
+            self.plantilla += 'plot_learning_curve(' + str(ctx.ID(0)) + ', "Curva de aprendizaje de ' + \
+                              str(ctx.ID(0)) + '", caracteristicas_' + str(ctx.ID(1)) + ', etiquetas_' + str(ctx.ID(1)) + ', axes=None, ylim=None, cv=None)\n'
 
             ruta = ""
             nombre = "CurvaDeAprendizaje" + str(ctx.ID(0)) + '.jpg'
@@ -544,11 +567,11 @@ class MyVisitor(ParseTreeVisitor):
                 nombre = str(ctx.STRING(1)).replace('"', "") + ".jpg"
 
             ruta += nombre
-
             plt.savefig(ruta, bbox_inches='tight')
             plt.show()
+            self.plantilla += "plt.savefig('" + ruta + "', bbox_inches='tight')\n" \
+                                                       "plt.show()"
         return self.visitChildren(ctx)
-
 
     # Visit a parse tree produced by UNaIAParser#exportacion.
     def visitExportacion(self, ctx: UNaIAParser.ExportacionContext):
@@ -558,39 +581,52 @@ class MyVisitor(ParseTreeVisitor):
         if type(datos) != pd.core.frame.DataFrame:
             df = datos["caracteristicas"]
             df["Etiquetas"] = datos["etiquetas"]
+            self.plantilla += "df_" + str(ctx.ID()) + " = datos_" + str(ctx.ID()) + "['caracteristicas']\n" \
+                              "df_" + str(ctx.ID()) + "['Etiquetas'] = datos_" + str(ctx.ID()) + "['etiquetas']\n"
         else:
             df = datos
+            self.plantilla += "df_" + str(ctx.ID()) + " = datos_" + str(ctx.ID()) + "\n"
 
         ruta = ""
         nombre = str(ctx.ID()) + '.csv'
 
         if ctx.EN() != None:
-            ruta += str(ctx.STRING(0)).replace('"',"") + '/'
+            ruta += str(ctx.STRING(0)).replace('"', "") + '/'
             if ctx.COMO() != None:
                 nombre = str(ctx.STRING(1)).replace('"', "") + ".csv"
-        elif ctx.COMO() != None :
+        elif ctx.COMO() != None:
             nombre = str(ctx.STRING(0)).replace('"', "") + ".csv"
 
         ruta += nombre
-
         df.to_csv(ruta, index=False)
+        self.plantilla += "df_" + str(ctx.ID()) + ".to_csv(" + ruta + ", index=False)\n"
 
         return self.visitChildren(ctx)
 
     # Visit a parse tree produced by UNaIAParser#normalizacion.
-    def visitQuantil(self, ctx:UNaIAParser.QuantilContext):
+    def visitQuantil(self, ctx: UNaIAParser.QuantilContext):
         datos = self.tabla[str(ctx.ID())]
         datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = datos["caracteristicas"][
             str(ctx.STRING()).replace("\"", "")].values.astype(float)
         q_scale = preprocessing.QuantileTransformer()
-        col_scaled = q_scale.fit_transform(datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")].values.reshape(-1, 1))
+        col_scaled = q_scale.fit_transform(
+            datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")].values.reshape(-1, 1))
         datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = col_scaled
+
+        self.plantilla += "\ndatos_" + str(ctx.ID()) + "['caracteristicas'][" + str(ctx.STRING()) + "]" \
+                                                                                             " = datos_" + str(ctx.ID()) + "['caracteristicas'][" + str(
+            ctx.STRING()) + "].values.astype(float)\n" \
+                                              "q_scale = preprocessing.QuantileTransformer()\n" \
+                                              "col_scaled = q_scale.fit_transform(datos_" + str(ctx.ID()) + "['caracteristicas'][" \
+                          + str(ctx.STRING()) + "].values.reshape(-1, 1))\n" \
+                                                                  "datos_" + str(ctx.ID()) + "['caracteristicas'][" + str(ctx.STRING()) + "] = col_scaled\n"
+
         self.tabla[str(ctx.ID())] = datos
 
         return "Ha sido Normalizado Correctamente"
 
     # Visit a parse tree produced by UNaIAParser#estandarizacion.
-    def visitEstandarizacion(self, ctx:UNaIAParser.EstandarizacionContext):
+    def visitEstandarizacion(self, ctx: UNaIAParser.EstandarizacionContext):
         datos = self.tabla[str(ctx.ID())]
         datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = datos["caracteristicas"][
             str(ctx.STRING()).replace("\"", "")].values.astype(float)
@@ -598,19 +634,38 @@ class MyVisitor(ParseTreeVisitor):
         col_scaled = std_scaler.fit_transform(
             datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")].values.reshape(-1, 1))
         datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = col_scaled
+
+        self.plantilla += "\ndatos_" + str(ctx.ID()) + "['caracteristicas'][" + str(ctx.STRING()) + "]" \
+                                                                                             " = datos_" + str(ctx.ID()) + "['caracteristicas'][" + str(
+            ctx.STRING()) + "].values.astype(float)\n" \
+                                              "std_scaler = preprocessing.StandardScaler()\n" \
+                                              "col_scaled = std_scaler.fit_transform(datos_" + str(ctx.ID()) + "['caracteristicas'][" \
+                          + str(ctx.STRING())+ "].values.reshape(-1, 1))\n" \
+                                                                  "datos_" + str(ctx.ID()) + "['caracteristicas'][" + str(ctx.STRING()) + "] = col_scaled\n"
+
         self.tabla[str(ctx.ID())] = datos
         return "Ha sido Estandarizado correctamente"
 
-
     # Visit a parse tree produced by UNaIAParser#escaladominmax.
-    def visitEscaladominmax(self, ctx:UNaIAParser.EscaladominmaxContext):
+    def visitEscaladominmax(self, ctx: UNaIAParser.EscaladominmaxContext):
         datos = self.tabla[str(ctx.ID())]
+
         datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = datos["caracteristicas"][
             str(ctx.STRING()).replace("\"", "")].values.astype(float)
         min_max_scaler = preprocessing.MinMaxScaler()
         col_scaled = min_max_scaler.fit_transform(
             datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")].values.reshape(-1, 1))
         datos["caracteristicas"][str(ctx.STRING()).replace("\"", "")] = col_scaled
+        self.plantilla += "\ndatos_" + str(ctx.ID()) + "['caracteristicas'][" + str(ctx.STRING()) + "]" \
+                         " = datos_" + str(ctx.ID()) + "['caracteristicas'][" + str(
+            ctx.STRING()) + "].values.astype(float)\n" \
+                                              "min_max_scaler = preprocessing.MinMaxScaler()\n" \
+                                              "col_scaled = min_max_scaler.fit_transform(datos_" + str(ctx.ID()) + "['caracteristicas'][" \
+                          + str(ctx.STRING()) + "].values.reshape(-1, 1))\n" \
+                                                                  "datos_" + str(ctx.ID()) + "['caracteristicas'][" + str(ctx.STRING()) + "] = col_scaled\n"
+
         self.tabla[str(ctx.ID())] = datos
         return "Ha sido Escalado Correctamente"
+
+
 del UNaIAParser

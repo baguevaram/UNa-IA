@@ -2,7 +2,7 @@ datosDeEjemplo = ejemplos "../datos/testLogistic.csv", "label"
 estandarizar datosDeEjemplo "x"
 estandarizar datosDeEjemplo "y"
 datosAPredecir = datos "../datos/testDatos.csv"
-miModelo = auto
+miModelo = arbolDeDecision
 datosEntrenamiento y datosPrueba = dividirDatos datosDeEjemplo:30
 entrenar miModelo con datosEntrenamiento
 datosPredicciones = predecir miModelo con datosAPredecir
@@ -10,8 +10,4 @@ efectividad = evaluar miModelo con datosPrueba
 estadisticas miModelo con datosDeEjemplo
 
 graficar miModelo con datosDeEjemplo como "a1" y "a2"
-#graficar miModelo con datosDeEjemplo como "a1" y "a2"
-#graficar miModelo con datosDeEjemplo como "a3"
-#graficar miModelo con datosDeEjemplo en "../input"
-#graficar miModelo con datosDeEjemplo en "../input" como "a1" y "a2"
-#graficar miModelo con datosDeEjemplo en "../input" como "a3"
+python
