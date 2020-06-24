@@ -1,4 +1,4 @@
-# Generated from /home/minorin/Documents/UnaIa/UNa-IA/Grammar/UNaIA.g4 by ANTLR 4.8
+# Generated from /home/brayan/Documentos/UNAL/Semestre 9/Lenguajes/UNaIA/UNa-IA/UNa-IA/Grammar/UNaIA.g4 by ANTLR 4.8
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .UNaIAParser import UNaIAParser
@@ -11,6 +11,11 @@ class UNaIAVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by UNaIAParser#programa.
     def visitPrograma(self, ctx:UNaIAParser.ProgramaContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by UNaIAParser#ayuda.
+    def visitAyuda(self, ctx:UNaIAParser.AyudaContext):
         return self.visitChildren(ctx)
 
 

@@ -5,6 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import learning_curve
+from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score, confusion_matrix
 import sklearn.model_selection
 import sklearn.datasets
@@ -91,7 +92,7 @@ def plot_decision_region(X, pred_fun, num):
     pl.ylabel("y")
 
 
-datosDeEjemplo = pd.read_csv("../datos/testLogistic.csv")
+datosDeEjemplo = pd.read_csv("../datos/Iris2.csv")
 etiquetas_datosDeEjemplo = datosDeEjemplo["label"]
 caracteristicas_datosDeEjemplo = datosDeEjemplo.drop("label", axis=1)
 with pd.option_context('display.max_rows', 10, 'display.max_columns', 2):

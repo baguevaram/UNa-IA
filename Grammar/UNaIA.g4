@@ -2,9 +2,10 @@ grammar UNaIA;
 
 // REGLAS SINTACTICAS
 
-programa : (asignacion | metodo)* (codigo_python)?;
+programa : (asignacion | metodo | ayuda)* (codigo_python)?;
 
-//El archivo de datos a cargar debe ser un csv de la forma datos, Etiqueta
+ayuda: AYUDA (STRING)?;
+
 datos: EJEMPLOS STRING (COMA STRING)? #DatosEjemplos
        | DATOS STRING #DatosDatos;
 
@@ -76,6 +77,8 @@ GRAFICAR:'graficar';
 EXPORTAR:'exportar';
 
 ENTRENAR: 'entrenar';
+
+AYUDA: 'ayuda';
 
 EVALUAR: 'evaluar';
 

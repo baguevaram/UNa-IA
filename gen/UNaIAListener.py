@@ -1,4 +1,4 @@
-# Generated from /home/minorin/Documents/UnaIa/UNa-IA/Grammar/UNaIA.g4 by ANTLR 4.8
+# Generated from /home/brayan/Documentos/UNAL/Semestre 9/Lenguajes/UNaIA/UNa-IA/UNa-IA/Grammar/UNaIA.g4 by ANTLR 4.8
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .UNaIAParser import UNaIAParser
@@ -14,6 +14,15 @@ class UNaIAListener(ParseTreeListener):
 
     # Exit a parse tree produced by UNaIAParser#programa.
     def exitPrograma(self, ctx:UNaIAParser.ProgramaContext):
+        pass
+
+
+    # Enter a parse tree produced by UNaIAParser#ayuda.
+    def enterAyuda(self, ctx:UNaIAParser.AyudaContext):
+        pass
+
+    # Exit a parse tree produced by UNaIAParser#ayuda.
+    def exitAyuda(self, ctx:UNaIAParser.AyudaContext):
         pass
 
 
