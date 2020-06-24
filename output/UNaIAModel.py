@@ -137,7 +137,7 @@ print('Precision: {}'.format(metrics.precision_score(etiquetas_datosDeEjemplo, p
 print('Recall: {}'.format(metrics.recall_score(etiquetas_datosDeEjemplo, predictions_miModelo, average='micro')))
 print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas_datosDeEjemplo, predictions_miModelo, average='micro')))
 print('#####################################################\n\n')
-MiModelo2 = LogisticRegression()
+MiModelo2 = KNeighborsClassifier(n_neighbors=5)
 caracteristicas_datos2Entrenamiento, caracteristicas_datos2Prueba, etiquetas_datos2Entrenamiento, etiquetas_datos2Prueba = train_test_split(caracteristicas_datosPredicciones, etiquetas_datosPredicciones, test_size=0.3)
 MiModelo2.fit(caracteristicas_datos2Entrenamiento, etiquetas_datos2Entrenamiento)
 

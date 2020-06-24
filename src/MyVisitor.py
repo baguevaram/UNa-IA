@@ -136,8 +136,114 @@ class MyVisitor(ParseTreeVisitor):
 
     tabla = {}
 
-    ayuda ={"a":"aaaaa",
-            "b": "aiuda"}
+    ayuda ={"datos":"Sirve para cargar los datos.\n"
+                    "     Tiene las siguientes sintaxis:\n"
+                    "           1. ejemplo STRING (, STRING)?\n "
+                    "           2. datos STRING\n"
+                    "\n     Ejemplo de uso:\n datosAPredecir = datos \"../datos/misDatos.csv\" \n",
+
+            "asignacion": "Sirve para asignar a un id datos, modelo, metodo, o asignaciones multiples.\n"
+                          "    Tiene las siguientes sintaxis:\n"
+                          "        1. ID = datos\n"                 
+                          "        2. ID = modelo\n"                
+                          "        3. ID = metodo\n"                
+                          "        4. ID Y ID = division\n"          
+                          "\nEjemplo de uso:\n    datosDeEjemplo = ejemplos \"../datos/ejemplos.csv\", \"color\" ",
+
+	        "division": "Sirve para dividir los datos en dos grupos (entrenamineto y prueba) en un porcentaje\n"
+                        "NUMERO (asignado a prueba y 1-NUMERO asignado a entrenamiento)\n"
+                        "    Tiene las siguientes sintaxis: \n"
+                        "        1. dividirDatos ID (: NUMERO)?\n"
+                        "\nEjemplo de uso:\n     datosEntrenamiento y datosPrueba = dividirDatos datosDeEjemplo:30\n",
+
+            "modelo": "Asigna el tipo de modelo que se va a utilizar\n"
+                      "    Tiene las siguientes sintaxis: \n"
+                      "        1. regresionLogistica\n"
+                      "        2. bayes\n"
+                      "        3. knn\n"
+                      "        4. svm\n"
+                      "        5. arbolDeDecision\n"
+                      "        6. bosqueAleatorio\n"
+                      "        7. auto\n"
+                      "\nEjemplo de uso:\n miModelo = knn",
+
+             "metodo": "Asigna el metodo a utilizar\n"
+                     "      1. entrenamiento\n"
+                     "      2. evaluacion\n"
+                     "      3. prediccion\n"
+                     "      4. reporte\n"
+                     "      5. estadisticas\n"
+                     "      6. graficas\n"
+                     "      7. exportacion\n"
+                     "      8. quantil\n"
+                     "      9. estandarizacion\n"
+                     "      10. escaladominmax\n"
+                     "\nEjemplo de uso:\n efectividad = evaluar miModelo con datosPrueba\n",
+
+             "entrenamiento": "Entrena el modelo de primer ID con los datos del segundo ID\n"
+                             "      Tiene las siguientes sintaxis:\n"
+                             "      1. entrenar ID con ID\n"
+                             "\n   Ejemplo de uso:\n miModeloEntrenado = entrenar miModelo con datosEntrenamiento\n",
+ 
+             "evaluacion": "Evalua el modelo de primer ID con los datos del segundo ID\n"
+             "      Tiene las siguientes sintaxis:\n"
+             "      1. evaluar ID con ID\n"
+             "  \nEjemplo de uso:\n miModeloEvaluado = evaluar miModelo con datosEntrenamiento\n",
+             
+             "prediccion": "Predice el modelo de primer ID con los datos del segundo ID\n"
+             "      Tiene las siguientes sintaxis:\n"
+             "      1. predecir ID con ID\n"
+             "  \nEjemplo de uso:\n miModeloPredicho = predecir miModelo con datosPrueba\n",
+ 
+             "reporte": "Reporta el conjunto de datos de la siguiente manera (filaParaVer,ColumnaParaVer)\n"
+             "      Tiene las siguientes sintaxis:\n"
+             "      1. reportar ID (NUMERO , NUMERO)?\n"
+             "  \nEjemplo de uso:\n reportar dataFrame\n",
+ 
+             "estadisticas":"Muestra las estadisticas del modelo de primer ID con los datos del segundo ID\n"
+             "         Tiene las siguientes sintaxis:\n"
+             "         1. estadisticas ID con ID\n"
+             "  \nEjemplo de uso:\n estadisticas miModelo con datosDeEjemplo\n",
+ 
+             "graficas":" Grafica el modelo de primer ID con los datos de segundo ID y los guarda en la ruta\n"
+             "     especificada con el nombre requerido (si no se da una ruta, se guarda en src)\n"
+             "         Tiene las siguientes sintaxis:\n"
+             "         1. graficar ID con ID (en STRING)? (como STRING (y STRING)?)?\n"
+             "  \nEjemplo de uso:\n graficar miModelo con datosDeEjemplo como 'a1' y 'a2'\n",
+ 
+             "exportar":" Exporta el conjunto de datos de primer ID en la ruta\n"
+             "         especificada con el nombre requerido (si no se da una ruta, se guarda en src)\n"
+             "         Tiene las siguientes sintaxis:\n"
+             "         1. exportar ID (en STRING)? (como STRING)?\n"
+             "  \nEjemplo de uso:\n exportar dataFrame como 'recetaDeLaSalsaBechamel'\n",
+
+             "quantil": "Subdivide en cuantiles la informacion en un ID de conjunto de datos en una columna STRING\n"
+             "         Tiene las siguientes sintaxis:\n"
+             "         1. quantil ID STRING\n"
+             "\n  Ejemplo de uso:\n quantil dataFrame 'columna'\n",
+ 
+             "estandarizar": "Estadariza la columna STRING del conjunto de datos ID\n"
+             "         Tiene las siguientes sintaxis:\n"
+             "         1. estandarizar ID STRING\n"
+             "\n  Ejemplo de uso:\n estandarizar dataFrame 'columna'\n",
+ 
+             "escaladominmax": "Busca el maximo y minimo valor de la columna STRING de conjunto de datos ID,\n"
+             "     al maximo le asigna 1, al minimo 0 y el resto de valores los deja entre 0  y 1\n"
+             "     Tiene las siguientes sintaxis:\n"
+             "          1. minmax ID STRING\n"
+             "\n  Ejemplo de uso:\n minmax dataFrame 'columna'\n",
+ 
+             "codigo_python": "genera (al final) la traduccion del codigo UNa-IA a python\n"
+             "     Tiene las siguientes sintaxis:\n"
+             "          1. python\n"
+             " \n Ejemplo de uso:\n . . . python\n",
+ 
+             "ayuda": "muestra toda la ayuda disponible para las palabras clave\n"
+             "     Tiene las siguientes sintaxis:\n"
+             "          1. ayuda palabraClave\n"
+             "          2. ayuda\n"                      
+             "\n  Ejemplo de uso:\n ayuda exportacion \n"
+}
 
     # Visit a parse tree produced by UNaIAParser#ayuda.
     def visitAyuda(self, ctx: UNaIAParser.AyudaContext):
