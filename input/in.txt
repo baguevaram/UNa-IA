@@ -9,7 +9,7 @@ efectividad = evaluar miModelo con datosPrueba
 
 estadisticas miModelo con datosDeEjemplo
 
-MiModelo2 = svm
+MiModelo2 = regresionLogistica
 datos2Entrenamiento y datos2Prueba = dividirDatos datosPredicciones:30
 entrenar MiModelo2 con datos2Entrenamiento
 datos2Predicciones = predecir MiModelo2 con datosAPredecir

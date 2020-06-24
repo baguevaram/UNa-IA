@@ -74,7 +74,7 @@ class MyVisitor(ParseTreeVisitor):
                 "    axes.set_ylabel(\"Puntaje\")\n" \
                 "    train_sizes, train_scores, test_scores, fit_times, _ = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs,\n" \
                 "                       train_sizes=train_sizes,\n" \
-                "                       return_times=True)\n" \
+                "                       return_times=True, shuffle=True)\n" \
                 "    train_scores_mean = np.mean(train_scores, axis=1)\n" \
                 "    train_scores_std = np.std(train_scores, axis=1)\n" \
                 "    test_scores_mean = np.mean(test_scores, axis=1)\n" \
@@ -183,7 +183,7 @@ class MyVisitor(ParseTreeVisitor):
         train_sizes, train_scores, test_scores, fit_times, _ = \
             learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs,
                            train_sizes=train_sizes,
-                           return_times=True)
+                           return_times=True, shuffle=True)
         train_scores_mean = np.mean(train_scores, axis=1)
         train_scores_std = np.std(train_scores, axis=1)
         test_scores_mean = np.mean(test_scores, axis=1)
