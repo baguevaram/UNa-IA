@@ -94,16 +94,6 @@ def plot_decision_region(X, pred_fun, num):
 datosDeEjemplo = pd.read_csv("../datos/testLogistic.csv")
 etiquetas_datosDeEjemplo = datosDeEjemplo["label"]
 caracteristicas_datosDeEjemplo = datosDeEjemplo.drop("label", axis=1)
-
-caracteristicas_datosDeEjemplo["x"] = caracteristicas_datosDeEjemplo["x"].values.astype(float)
-std_scaler = preprocessing.StandardScaler()
-col_scaled = std_scaler.fit_transform(caracteristicas_datosDeEjemplo["x"].values.reshape(-1, 1))
-caracteristicas_datosDeEjemplo["x"] = col_scaled
-
-caracteristicas_datosDeEjemplo["y"] = caracteristicas_datosDeEjemplo["y"].values.astype(float)
-std_scaler = preprocessing.StandardScaler()
-col_scaled = std_scaler.fit_transform(caracteristicas_datosDeEjemplo["y"].values.reshape(-1, 1))
-caracteristicas_datosDeEjemplo["y"] = col_scaled
 with pd.option_context('display.max_rows', 10, 'display.max_columns', 2):
     print("#####################################################")
     print("Las Caracteristicas de la variable son las siguientes: ")
@@ -126,7 +116,8 @@ miModelo.fit(caracteristicas_datosEntrenamiento, etiquetas_datosEntrenamiento)
 print("\n\n#####################################################")
 print("Resultados de la Validación Cruzada para el Modelo miModelo :\n")
 datosPredicciones = datosAPredecir
-datosPredicciones['Etiquetas'] = miModelo.predict(datosAPredecir)
+caracteristicas_datosPredicciones = datosAPredecir
+etiquetas_datosPredicciones = miModelo.predict(datosAPredecir)
 desempeño_miModelo= miModelo.score(caracteristicas_datosPrueba, etiquetas_datosPrueba)
 print("#####################################################")
 print("Desempeño del modelo miModelo :", desempeño_miModelo)
@@ -145,14 +136,54 @@ print('Precision: {}'.format(metrics.precision_score(etiquetas_datosDeEjemplo, p
 print('Recall: {}'.format(metrics.recall_score(etiquetas_datosDeEjemplo, predictions_miModelo, average='micro')))
 print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas_datosDeEjemplo, predictions_miModelo, average='micro')))
 print('#####################################################\n\n')
+MiModelo2 = sklearn.svm.NuSVC(gamma="auto")
+caracteristicas_datos2Entrenamiento, caracteristicas_datos2Prueba, etiquetas_datos2Entrenamiento, etiquetas_datos2Prueba = train_test_split(caracteristicas_datosPredicciones, etiquetas_datosPredicciones, test_size=0.2)
+MiModelo2.fit(caracteristicas_datos2Entrenamiento, etiquetas_datos2Entrenamiento)
+
+print("\n\n#####################################################")
+print("Resultados de la Validación Cruzada para el Modelo MiModelo2 :\n")
+datos2Predicciones = datosAPredecir
+caracteristicas_datos2Predicciones = datosAPredecir
+etiquetas_datos2Predicciones = MiModelo2.predict(datosAPredecir)
+desempeño_MiModelo2= MiModelo2.score(caracteristicas_datosPrueba, etiquetas_datosPrueba)
+print("#####################################################")
+print("Desempeño del modelo MiModelo2 :", desempeño_MiModelo2)
+print("#####################################################\n\n")
+predictions_MiModelo2= MiModelo2.predict(caracteristicas_datosDeEjemplo)
+
+cnf_matrix_MiModelo2= confusion_matrix(etiquetas_datosDeEjemplo, predictions_MiModelo2)
+print('#####################################################\n')
+print('Matriz de confusion del modelo, MiModelo2:\n')
+print(cnf_matrix_MiModelo2)
+print('#####################################################\n\n')
+
+print('#####################################################\n')
+print('Resultados del modelo MiModelo2:\n')
+print('Precision: {}'.format(metrics.precision_score(etiquetas_datosDeEjemplo, predictions_MiModelo2, average='micro')))
+print('Recall: {}'.format(metrics.recall_score(etiquetas_datosDeEjemplo, predictions_MiModelo2, average='micro')))
+print('Puntaje F_1: {}'.format(metrics.f1_score(etiquetas_datosDeEjemplo, predictions_MiModelo2, average='micro')))
+print('#####################################################\n\n')
 plot_decision_region(caracteristicas_datosDeEjemplo.values, gen_pred_fun(miModelo), 100)
 plot_data(caracteristicas_datosDeEjemplo.values, etiquetas_datosDeEjemplo.values)
 pl.title("Region de Decision de miModelo")
-pl.savefig('a1.jpg', bbox_inches='tight')
+pl.savefig('../datos/a1.jpg', bbox_inches='tight')
 pl.show()
 
 plot_learning_curve(miModelo, "Curva de aprendizaje de miModelo", caracteristicas_datosDeEjemplo, etiquetas_datosDeEjemplo, axes=None, ylim=None, cv=None)
-plt.savefig('a2.jpg', bbox_inches='tight')
+plt.savefig('../datos/a2.jpg', bbox_inches='tight')
 plt.show()
-df_datosPredicciones = datosPredicciones
+plot_decision_region(caracteristicas_datosDeEjemplo.values, gen_pred_fun(MiModelo2), 100)
+plot_data(caracteristicas_datosDeEjemplo.values, etiquetas_datosDeEjemplo.values)
+pl.title("Region de Decision de MiModelo2")
+pl.savefig('a3.jpg', bbox_inches='tight')
+pl.show()
+
+plot_learning_curve(MiModelo2, "Curva de aprendizaje de MiModelo2", caracteristicas_datosDeEjemplo, etiquetas_datosDeEjemplo, axes=None, ylim=None, cv=None)
+plt.savefig('a4.jpg', bbox_inches='tight')
+plt.show()
+df_datosPredicciones = caracteristicas_datosPredicciones
+df_datosPredicciones['Etiquetas'] = etiquetas_datosPredicciones
 df_datosPredicciones.to_csv('datosPredicciones.csv', index=False)
+df_datos2Predicciones = caracteristicas_datos2Predicciones
+df_datos2Predicciones['Etiquetas'] = etiquetas_datos2Predicciones
+df_datos2Predicciones.to_csv('datos2Predicciones.csv', index=False)

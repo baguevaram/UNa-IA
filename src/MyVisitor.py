@@ -467,7 +467,7 @@ class MyVisitor(ParseTreeVisitor):
             instruction += 'print("' + lis[2] + '")\n'
             instruction += 'print("' + lis[3] + '")\n'
             instruction += 'print("' + lis[4] + '")\n'
-            instruction += 'print("#####################################################\\n\\n"\n\n'
+            instruction += 'print("#####################################################\\n\\n")\n\n'
 
 
         except Exception:
@@ -517,8 +517,9 @@ class MyVisitor(ParseTreeVisitor):
         # print(datos.head())
 
         instruction += str(ctx.parentCtx.parentCtx.ID()) + " = " + str(ctx.ID(1)) + "\n"
-        instruction += str(ctx.parentCtx.parentCtx.ID()) + "['Etiquetas'] = " + str(ctx.ID(0)) + ".predict(" + str(ctx.ID(1)) + ")\n"
-
+        instruction += "caracteristicas_" + str(ctx.parentCtx.parentCtx.ID()) + " = " + str(ctx.ID(1)) + "\n"
+        #instruction += str(ctx.parentCtx.parentCtx.ID()) + "['Etiquetas'] = " + str(ctx.ID(0)) + ".predict(" + str(ctx.ID(1)) + ")\n"
+        instruction += "etiquetas_" + str(ctx.parentCtx.parentCtx.ID()) + " = "+ str(ctx.ID(0)) + ".predict(" + str(ctx.ID(1)) + ")\n"
         #print(instruction)
         self.plantilla += instruction
         return pruebas_dict
@@ -674,12 +675,12 @@ class MyVisitor(ParseTreeVisitor):
         if type(datos) != pd.core.frame.DataFrame:
             df = datos["caracteristicas"]
             df["Etiquetas"] = datos["etiquetas"]
-            # self.plantilla += "df_" + str(ctx.ID()) + " = caracteristicas_" + str(ctx.ID()) + "\n" \
-            #                   "df_" + str(ctx.ID()) + "['Etiquetas'] = etiquetas_" + str(ctx.ID()) + "\n"
+            self.plantilla += "df_" + str(ctx.ID()) + " = caracteristicas_" + str(ctx.ID()) + "\n" \
+                             "df_" + str(ctx.ID()) + "['Etiquetas'] = etiquetas_" + str(ctx.ID()) + "\n"
         else:
             df = datos
+            self.plantilla += "df_" + str(ctx.ID()) + " = " + str(ctx.ID()) + "\n"
 
-        self.plantilla += "df_" + str(ctx.ID()) + " = " + str(ctx.ID()) + "\n"
         ruta = ""
         nombre = str(ctx.ID()) + '.csv'
 

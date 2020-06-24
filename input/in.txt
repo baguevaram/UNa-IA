@@ -1,6 +1,4 @@
 datosDeEjemplo = ejemplos "../datos/testLogistic.csv", "label"
-estandarizar datosDeEjemplo "x"
-estandarizar datosDeEjemplo "y"
 reportar datosDeEjemplo (10, 2)
 datosAPredecir = datos "../datos/testDatos.csv"
 miModelo = arbolDeDecision
@@ -8,8 +6,18 @@ datosEntrenamiento y datosPrueba = dividirDatos datosDeEjemplo:30
 entrenar miModelo con datosEntrenamiento
 datosPredicciones = predecir miModelo con datosAPredecir
 efectividad = evaluar miModelo con datosPrueba
+
 estadisticas miModelo con datosDeEjemplo
 
-graficar miModelo con datosDeEjemplo como "a1" y "a2"
+MiModelo2 = svm
+datos2Entrenamiento y datos2Prueba = dividirDatos datosPredicciones:30
+entrenar MiModelo2 con datos2Entrenamiento
+datos2Predicciones = predecir MiModelo2 con datosAPredecir
+efectividad2 = evaluar MiModelo2 con datosPrueba
+estadisticas MiModelo2 con datosDeEjemplo
+
+graficar miModelo con datosDeEjemplo en "../datos" como "a1" y "a2"
+graficar MiModelo2 con datosDeEjemplo como "a3" y "a4"
 exportar datosPredicciones
+exportar datos2Predicciones
 python
